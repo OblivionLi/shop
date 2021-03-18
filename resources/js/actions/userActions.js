@@ -4,6 +4,15 @@ import {
     RESET_USER_FAIL,
     RESET_USER_REQUEST,
     RESET_USER_SUCCESS,
+    USER_DELETE_FAIL,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
+    USER_EDIT_FAIL,
+    USER_EDIT_REQUEST,
+    USER_EDIT_SUCCESS,
+    USER_GET_DETAILS_FAIL,
+    USER_GET_DETAILS_REQUEST,
+    USER_GET_DETAILS_SUCCESS,
     USER_LIST_FAIL,
     USER_LIST_REQUEST,
     USER_LIST_RESET,
@@ -142,7 +151,7 @@ export const resetPass = (
         dispatch({ type: USER_RESET_PASS_REQUEST });
 
         const { data } = await Axios.patch(
-            `/api/auth/reset-password/${email}`,
+            `/api/reset-password/${email}`,
             {
                 email,
                 password,
@@ -169,7 +178,7 @@ export const getUserToReset = (
         dispatch({ type: RESET_USER_REQUEST });
 
         const { data } = await Axios.get(
-            `/api/auth/reset-password/${id}`,
+            `/api/reset-password/${id}`,
         );
 
         dispatch({ type: RESET_USER_SUCCESS, payload: data });
@@ -180,6 +189,98 @@ export const getUserToReset = (
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message
+        });
+    }
+};
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_DELETE_REQUEST });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        };
+
+        const { data } = await Axios.delete(`/api/users/${id}`, config);
+
+        dispatch({ type: USER_DELETE_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: USER_DELETE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const getEditUserDetails = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_GET_DETAILS_REQUEST });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "aplication/json",
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        };
+
+        const { data } = await Axios.get(`/api/users/${id}`, config);
+
+        dispatch({ type: USER_GET_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: USER_GET_DETAILS_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const editUser = (id, name, email, role) => async (
+    dispatch,
+    getState
+) => {
+    try {
+        dispatch({ type: USER_EDIT_REQUEST });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.access_token}`,
+            },
+        };
+
+        const { data } = await Axios.patch(
+            `/api/users/${id}`,
+            { name, email, role },
+            config
+        );
+
+        dispatch({ type: USER_EDIT_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: USER_EDIT_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
         });
     }
 };

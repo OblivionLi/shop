@@ -28,8 +28,6 @@ const ChildCatScreen = ({ history }) => {
         error: errorDelete,
     } = childCatDelete;
 
-    console.log(childCats)
-
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 

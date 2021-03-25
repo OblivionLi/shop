@@ -23,4 +23,9 @@ class ChildCategory extends Model
     {
         return $this->belongsToMany(ParentCategory::class, 'child_category_parent_category');
     }
+
+    public function scopeInfo($query)
+    {
+        return $query->with('products', 'parentCats');
+    }
 }

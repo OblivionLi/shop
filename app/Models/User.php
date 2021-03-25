@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'user_role');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function scopeInfo($query)
     {
         return $query->with('roles.permissions');

@@ -18,7 +18,7 @@ class ColorController extends Controller
      */
     public function index()
     {
-        $colors = Color::all();
+        $colors = Color::with('products')->get();
 
         return ColorResource::collection($colors);
     }

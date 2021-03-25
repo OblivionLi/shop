@@ -16,7 +16,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return PermissionResource::collection(Permission::all());
+        return PermissionResource::collection(Permission::info()->get());
     }
 
     /**

@@ -18,7 +18,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
+        $brands = Brand::with('products')->get();
 
         return BrandResource::collection($brands);
     }

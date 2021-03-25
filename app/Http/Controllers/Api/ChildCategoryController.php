@@ -18,7 +18,7 @@ class ChildCategoryController extends Controller
      */
     public function index()
     {
-        $child_categories = ChildCategory::all();
+        $child_categories = ChildCategory::info()->get();
 
         return ChildCategoryResource::collection($child_categories);
     }

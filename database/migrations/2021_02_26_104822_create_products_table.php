@@ -15,14 +15,15 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('brand_id')->constrained();
             $table->string('name');
             $table->string('product_code');
             $table->decimal('price', 8, 2);
-            $table->integer('discount');
+            $table->integer('discount')->nullable();
             $table->text('description');
             $table->text('material_description');
-            $table->decimal('rating', 2, 1);
-            $table->integer('total_reviews');
+            $table->decimal('rating', 2, 1)->nullable();
+            $table->integer('total_reviews')->nullable();
             $table->string('type');
             $table->integer('total_quantities');
             $table->timestamps();

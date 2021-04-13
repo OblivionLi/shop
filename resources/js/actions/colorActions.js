@@ -101,7 +101,7 @@ export const getEditColorDetails = (id) => async (dispatch, getState) => {
     }
 };
 
-export const editColor = (colorId, color_name, color_quantity) => async (
+export const editColor = (colorId, color_name) => async (
     dispatch,
     getState
 ) => {
@@ -121,8 +121,7 @@ export const editColor = (colorId, color_name, color_quantity) => async (
         const { data } = await Axios.patch(
             `/api/color/${colorId}`,
             {
-                color_name,
-                color_quantity,
+                color_name
             },
             config
         );

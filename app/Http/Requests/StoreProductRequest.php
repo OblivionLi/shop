@@ -24,13 +24,17 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'product_code' => 'required',
-            'price' => 'required|numeric|between:0.01,9999.99',
-            'description' => 'required',
-            'material_description' => 'required',
+            'brandName' => 'required',
             'type' => 'required',
-            'total_quantities' => 'required'
+            'childCategory' => 'required',
+            'productName' => 'required',
+            'productCode' => 'required',
+            'description' => 'required',
+            'materialDescription' => 'required',
+            'price' => 'required|numeric|between:0.01,9999.99',
+            'colorNqty' => 'required',
+            'sizeNqty' => 'required',
+            'image' => 'image|mimes:jpg,png,jpeg|max:5000',
         ];
     }
 }

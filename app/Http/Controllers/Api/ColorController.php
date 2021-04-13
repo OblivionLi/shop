@@ -34,7 +34,6 @@ class ColorController extends Controller
         $color = new Color();
 
         $color->color_name = $request->color_name;
-        $color->color_quantity = 0;
 
         $color->save();
 
@@ -66,7 +65,6 @@ class ColorController extends Controller
         $color = Color::find($id);
 
         $color->color_name = $request->color_name;
-        $color->color_quantity = $request->color_quantity;
 
         $color->save();
 

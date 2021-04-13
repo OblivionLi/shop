@@ -101,7 +101,7 @@ export const getEditSizeDetails = (id) => async (dispatch, getState) => {
     }
 };
 
-export const editSize = (sizeId, size_name, size_quantity) => async (
+export const editSize = (sizeId, size_name) => async (
     dispatch,
     getState
 ) => {
@@ -121,8 +121,7 @@ export const editSize = (sizeId, size_name, size_quantity) => async (
         const { data } = await Axios.patch(
             `/api/size/${sizeId}`,
             {
-                size_name,
-                size_quantity,
+                size_name
             },
             config
         );

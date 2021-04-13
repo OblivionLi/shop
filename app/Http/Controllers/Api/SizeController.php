@@ -34,7 +34,6 @@ class SizeController extends Controller
         $size = new Size();
 
         $size->size_name = $request->size_name;
-        $size->size_quantity = 0;
 
         $size->save();
 
@@ -66,7 +65,6 @@ class SizeController extends Controller
         $size = Size::find($id);
 
         $size->size_name = $request->size_name;
-        $size->size_quantity = $request->size_quantity;
 
         $size->save();
 

@@ -1,7 +1,18 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { productAdminListReducer } from "./reducers/productReducers";
+import {
+    productAdminListReducer,
+    productGetEditDetailsReducer,
+    productEditReducer,
+    productCreateReducer,
+    productDeleteReducer,
+    productGetRelDetailsReducer,
+    productImageReplaceReducer,
+    productImageCreateReducer,
+    productImageDeleteReducer,
+    productReviewCreateReducer,
+} from "./reducers/productReducers";
 import {
     brandAdminListReducer,
     brandCreateReducer,
@@ -71,6 +82,15 @@ import {
 
 const reducer = combineReducers({
     productAdminList: productAdminListReducer,
+    productGetEditDetails: productGetEditDetailsReducer,
+    productEdit: productEditReducer,
+    productCreate: productCreateReducer,
+    productDelete: productDeleteReducer,
+    productGetRelDetails: productGetRelDetailsReducer,
+    productImageReplace: productImageReplaceReducer,
+    productImageCreate: productImageCreateReducer,
+    productImageDelete: productImageDeleteReducer,
+    productReviewCreate: productReviewCreateReducer,
 
     brandAdminList: brandAdminListReducer,
     brandCreate: brandCreateReducer,

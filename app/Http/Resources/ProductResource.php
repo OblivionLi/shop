@@ -33,7 +33,8 @@ class ProductResource extends JsonResource
             'colors' => $this->colors,
             'childCategories' => $this->childCategories,
             'user' => $this->user,
-            'images' => $this->images
+            'images' => $this->images,
+            'reviews' => $this->reviews
         ];
     }
 }

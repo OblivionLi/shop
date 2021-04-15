@@ -54,8 +54,12 @@ class Product extends Model
         return $this->hasMany(ProductImages::class);
     } 
 
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
     public function scopeInfo($query)
     {
-        return $query->with('brand', 'sizes', 'colors', 'childCategories', 'user', 'images');
+        return $query->with('brand', 'sizes', 'colors', 'childCategories', 'user', 'images', 'reviews');
     }
 }

@@ -41,7 +41,6 @@ const EditSizeScreen = ({ setOpenEditDialog, setRequestData, sizeId }) => {
                 dispatch(getEditSizeDetails(sizeId));
             } else {
                 setSizeName(size.size_name);
-                setSizeQty(size.size_quantity);
             }
         }
 
@@ -53,7 +52,7 @@ const EditSizeScreen = ({ setOpenEditDialog, setRequestData, sizeId }) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(editSize(sizeId, sizeName, sizeQty));
+        dispatch(editSize(sizeId, sizeName));
 
         setRequestData(new Date());
         setSuccessModal(true);
@@ -92,21 +91,6 @@ const EditSizeScreen = ({ setOpenEditDialog, setRequestData, sizeId }) => {
                                     value={sizeName}
                                     onChange={(e) =>
                                         setSizeName(e.target.value)
-                                    }
-                                    required
-                                />
-                            </div>
-
-                            <div className="form__field">
-                                <TextField
-                                    variant="outlined"
-                                    name="sizeQty"
-                                    label="Size Quantity"
-                                    type="number"
-                                    fullWidth
-                                    value={sizeQty}
-                                    onChange={(e) =>
-                                        setSizeQty(e.target.value)
                                     }
                                     required
                                 />

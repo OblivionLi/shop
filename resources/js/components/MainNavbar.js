@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { fade, makeStyles } from "@material-ui/core/styles";
@@ -16,8 +17,20 @@ import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { logout } from "../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
+    registerLink: {
+        margin: "auto 0",
+        fontWeight: "600",
+        fontSize: "19px",
+        color: "#3a446b",
+        opacity: "0.5",
+        "&:hover": {
+            textDecoration: "none",
+            // opacity: '1'
+        },
+    },
     grow: {
         flexGrow: 1,
     },
@@ -87,12 +100,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    const logoutHandler = () => {
+        dispatch(logout());
+    };
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -144,7 +165,9 @@ const Navbar = () => {
                 <IconButton className={classes.icons}>
                     <ExitToAppIcon />
                 </IconButton>
-                <a href="#">Logout</a>
+                <Link to="/" onClick={logoutHandler}>
+                    Logout
+                </Link>
             </MenuItem>
         </Menu>
     );
@@ -230,17 +253,27 @@ const Navbar = () => {
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                            className={classes.icons}
-                        >
-                            <AccountCircle />
-                        </IconButton>
+
+                        {userInfo ? (
+                            <IconButton
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                                className={classes.icons}
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        ) : (
+                            <Link
+                                to="/login"
+                                className={classes.registerLink}
+                            >
+                                Login
+                            </Link>
+                        )}
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton

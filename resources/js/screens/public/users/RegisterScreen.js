@@ -49,6 +49,8 @@ const RegisterScreen = ({ location, history }) => {
 
         if (password != passwordConfirmation) {
             setMessage("Passwords do not match");
+        } else if (password.length < 6) {
+            setMessage("Password can't be less than 6 characters")
         } else {
             dispatch(register(name, email, password, passwordConfirmation));
         }
@@ -70,7 +72,7 @@ const RegisterScreen = ({ location, history }) => {
                         {message && (
                             <Message variant="error">{message}</Message>
                         )}
-                        {error && <Message variant="error">{error}</Message>}
+                        {error && <Message variant="error">{message}</Message>}
                         {loading && <Loader />}
                         <form onSubmit={submitHandler}>
                             <TextField

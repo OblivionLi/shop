@@ -35,7 +35,7 @@ const ForgotPasswordScreen = ({ history }) => {
     const submitHandler = e => {
         e.preventDefault()
 
-        Axios.post('/api/auth/forgot-password', { email })
+        Axios.post('/api/forgot-password', { email })
 
         Swal.fire({
             position: 'center',

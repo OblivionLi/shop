@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ResetPasswordScreen = () => {
+const ResetPasswordScreen = ({ history, match }) => {
     const classes = useStyles();
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");

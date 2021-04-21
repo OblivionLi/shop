@@ -11,6 +11,9 @@ class ForgotPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $user;
+    public $token;
+
     /**
      * Create a new message instance.
      *

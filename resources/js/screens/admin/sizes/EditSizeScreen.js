@@ -17,7 +17,6 @@ import {
 
 const EditSizeScreen = ({ setOpenEditDialog, setRequestData, sizeId }) => {
     const [sizeName, setSizeName] = useState("");
-    const [sizeQty, setSizeQty] = useState("");
 
     const [successModal, setSuccessModal] = useState(false);
     const dispatch = useDispatch();

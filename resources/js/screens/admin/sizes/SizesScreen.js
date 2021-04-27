@@ -149,10 +149,6 @@ const SizesScreen = ({ history }) => {
                             field: "size_name",
                         },
                         {
-                            title: "Quantity",
-                            field: "size_quantity",
-                        },
-                        {
                             title: "Updated At",
                             field: "updated_at",
                             render: (sizes) => {

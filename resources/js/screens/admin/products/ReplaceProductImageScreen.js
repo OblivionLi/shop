@@ -86,9 +86,11 @@ const ReplaceProductImageScreen = ({
                     <form
                         onSubmit={submitHandler}
                         encType="multipart/form-data"
+                        method="POST"
                     >
                         <div className="form">
                             <div className="form__field">
+                                <input type="hidden" name="_method" value="PUT" />
                                 <input
                                     id="contained-button-file"
                                     type="file"

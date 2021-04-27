@@ -149,10 +149,6 @@ const ColorsScreen = ({ history }) => {
                             field: "color_name",
                         },
                         {
-                            title: "Quantity",
-                            field: "color_quantity",
-                        },
-                        {
                             title: "Updated At",
                             field: "updated_at",
                             render: (colors) => {

@@ -17,7 +17,6 @@ import {
 
 const EditColorScreen = ({ setOpenEditDialog, setRequestData, colorId }) => {
     const [colorName, setColorName] = useState("");
-    const [colorQty, setColorQty] = useState("");
 
     const [successModal, setSuccessModal] = useState(false);
     const dispatch = useDispatch();
@@ -41,7 +40,6 @@ const EditColorScreen = ({ setOpenEditDialog, setRequestData, colorId }) => {
                 dispatch(getEditColorDetails(colorId));
             } else {
                 setColorName(color.color_name);
-                setColorQty(color.color_quantity);
             }
         }
 
@@ -53,7 +51,7 @@ const EditColorScreen = ({ setOpenEditDialog, setRequestData, colorId }) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(editColor(colorId, colorName, colorQty));
+        dispatch(editColor(colorId, colorName));
 
         setRequestData(new Date());
         setSuccessModal(true);
@@ -92,21 +90,6 @@ const EditColorScreen = ({ setOpenEditDialog, setRequestData, colorId }) => {
                                     value={colorName}
                                     onChange={(e) =>
                                         setColorName(e.target.value)
-                                    }
-                                    required
-                                />
-                            </div>
-
-                            <div className="form__field">
-                                <TextField
-                                    variant="outlined"
-                                    name="colorQty"
-                                    label="Color Quantity"
-                                    type="number"
-                                    fullWidth
-                                    value={colorQty}
-                                    onChange={(e) =>
-                                        setColorQty(e.target.value)
                                     }
                                     required
                                 />

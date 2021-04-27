@@ -8,6 +8,7 @@ import LoginScreen from './screens/public/users/LoginScreen';
 import RegisterScreen from './screens/public/users/RegisterScreen';
 import ResetPasswordScreen from './screens/public/users/ResetPasswordScreen';
 import ForgotPasswordScreen from './screens/public/users/ForgotPasswordScreen';
+import AdminScreen from './screens/AdminScreen'
 
 function Index() {
     return (
@@ -18,6 +19,9 @@ function Index() {
                 <Route path="/register" component={RegisterScreen} />
                 <Route path="/reset-password/:id" component={ResetPasswordScreen} />
                 <Route path="/forgot-password" component={ForgotPasswordScreen} />
+
+                {/* Admin View */}
+                <Route path="/admin" component={AdminScreen} />
             </Switch>
         </Router>
     );

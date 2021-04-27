@@ -27,6 +27,10 @@ import {
     PRODUCT_IMAGE_DELETE_FAIL,
     PRODUCT_IMAGE_DELETE_REQUEST,
     PRODUCT_IMAGE_DELETE_SUCCESS,
+    PRODUCT_IMAGE_REPLACE_REQUEST,
+    PRODUCT_IMAGE_REPLACE_SUCCESS,
+    PRODUCT_IMAGE_REPLACE_FAIL
+
 } from "../constants/productConstants";
 
 export const adminListProducts = () => async (dispatch, getState) => {
@@ -269,7 +273,7 @@ export const replaceProductImage = (
     formData
 ) => async (dispatch, getState) => {
     try {
-        dispatch({ type: PRODUCT_EDIT_REQUEST });
+        dispatch({ type: PRODUCT_IMAGE_REPLACE_REQUEST });
 
         const {
             userLogin: { userInfo },
@@ -282,16 +286,16 @@ export const replaceProductImage = (
             },
         };
 
-        const { data } = await Axios.put(
-            `/api/productImage/${productImageId}`,
+        const { data } = await Axios.post(
+            `/api/RproductImage/${productImageId}`,
             formData,
             config
         );
 
-        dispatch({ type: PRODUCT_EDIT_SUCCESS, payload: data });
+        dispatch({ type: PRODUCT_IMAGE_REPLACE_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
-            type: PRODUCT_EDIT_FAIL,
+            type: PRODUCT_IMAGE_REPLACE_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

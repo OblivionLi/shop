@@ -228,15 +228,6 @@ class ProductController extends Controller
     }
 
     public function replaceImage(Request $request) {
-        $currentImage = ProductImages::find($request->productImageId);
-        $currentImagePath = public_path('/storage/' . $currentImage->path);
-
-        if (File::exists($currentImagePath)) {
-            File::delete($currentImagePath);
-
-            $currentImage->delete();
-        }
-
         if ($request->hasFile('image')) {
             $newImage = new ProductImages();
 
@@ -246,6 +237,17 @@ class ProductController extends Controller
             $newImage->path = $request->image->storeAs('productImages', $imgFileName, 'public');
 
             $newImage->save();
+
+            $currentImage = ProductImages::find($request->productImageId);
+            $currentImagePath = public_path('/storage/' . $currentImage->path);
+
+            if (File::exists($currentImagePath)) {
+                File::delete($currentImagePath);
+
+                $currentImage->delete();
+            }
+        } else {
+            return response()->json(['error' => 'Product Image replacement failed!']);
         }
 
         return response()->json(['success' => 'Product Image replaced succesfully!']);

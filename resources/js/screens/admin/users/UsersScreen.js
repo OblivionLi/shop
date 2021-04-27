@@ -206,6 +206,7 @@ const UsersScreen = ({ history }) => {
                                         <div className='table-detail'>
                                             <div className='table-detail--par'>
                                                 {rowData.roles[0] &&
+                                                rowData.roles[0].permissions.length ?
                                                     rowData.roles[0].permissions.map(
                                                         permission => (
                                                             <p
@@ -218,7 +219,7 @@ const UsersScreen = ({ history }) => {
                                                                 }
                                                             </p>
                                                         )
-                                                    )}
+                                                    ) : (<p>This User ({rowData.name}) has no permissions.</p>) }
                                             </div>
                                         </div>
                                     )

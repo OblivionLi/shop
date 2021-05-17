@@ -149,6 +149,19 @@ const SizesScreen = ({ history }) => {
                             field: "size_name",
                         },
                         {
+                            title: "Created At",
+                            field: "created_at",
+                            render: (sizes) => {
+                                {
+                                    return (
+                                        <Moment format="DD/MM/YYYY HH:mm">
+                                            {sizes.created_at}
+                                        </Moment>
+                                    );
+                                }
+                            },
+                        },
+                        {
                             title: "Updated At",
                             field: "updated_at",
                             render: (sizes) => {

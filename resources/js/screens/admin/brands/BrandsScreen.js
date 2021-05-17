@@ -153,6 +153,19 @@ const BrandsScreen = ({ history }) => {
                             field: "brand_quantity",
                         },
                         {
+                            title: 'Created At',
+                            field: 'created_at',
+                            render: brands => {
+                                {
+                                    return (
+                                        <Moment format='DD/MM/YYYY HH:mm'>
+                                            {brands.created_at}
+                                        </Moment>
+                                    )
+                                }
+                            }
+                        },
+                        {
                             title: 'Updated At',
                             field: 'updated_at',
                             render: brands => {

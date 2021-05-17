@@ -149,6 +149,19 @@ const ColorsScreen = ({ history }) => {
                             field: "color_name",
                         },
                         {
+                            title: "Created At",
+                            field: "created_at",
+                            render: (colors) => {
+                                {
+                                    return (
+                                        <Moment format="DD/MM/YYYY HH:mm">
+                                            {colors.created_at}
+                                        </Moment>
+                                    );
+                                }
+                            },
+                        },
+                        {
                             title: "Updated At",
                             field: "updated_at",
                             render: (colors) => {

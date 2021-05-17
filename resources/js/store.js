@@ -22,6 +22,14 @@ import {
 } from "./reducers/brandReducers";
 
 import {
+    typeAdminListReducer,
+    typeCreateReducer,
+    typeGetEditDetailsReducer,
+    typeEditReducer,
+    typeDeleteReducer,
+} from "./reducers/typeReducers";
+
+import {
     sizeAdminListReducer,
     sizeCreateReducer,
     sizeGetEditDetailsReducer,
@@ -97,6 +105,12 @@ const reducer = combineReducers({
     brandGetEditDetails: brandGetEditDetailsReducer,
     brandEdit: brandEditReducer,
     brandDelete: brandDeleteReducer,
+
+    typeAdminList: typeAdminListReducer,
+    typeCreate: typeCreateReducer,
+    typeGetEditDetails: typeGetEditDetailsReducer,
+    typeEdit: typeEditReducer,
+    typeDelete: typeDeleteReducer,
 
     sizeAdminList: sizeAdminListReducer,
     sizeCreate: sizeCreateReducer,

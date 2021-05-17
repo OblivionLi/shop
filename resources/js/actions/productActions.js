@@ -161,6 +161,7 @@ export const editProduct = (
     type,
     brand_name,
     child_cat,
+    parent_cat,
     colorNqty,
     sizeNqty
 ) => async (dispatch, getState) => {
@@ -189,6 +190,7 @@ export const editProduct = (
                 type,
                 brand_name,
                 child_cat,
+                parent_cat,
                 colorNqty,
                 sizeNqty
             },

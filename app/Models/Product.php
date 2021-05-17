@@ -44,6 +44,16 @@ class Product extends Model
         return $this->belongsToMany(ChildCategory::class, 'child_category_product');
     }
 
+    public function parentCategories()
+    {
+        return $this->belongsToMany(ParentCategory::class, 'parent_category_product');
+    }
+
+    public function types()
+    {
+        return $this->belongsToMany(Type::class, 'type_product');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -60,6 +70,6 @@ class Product extends Model
 
     public function scopeInfo($query)
     {
-        return $query->with('brand', 'sizes', 'colors', 'childCategories', 'user', 'images', 'reviews');
+        return $query->with('brand', 'sizes', 'colors', 'childCategories', 'parentCategories', 'types', 'user', 'images', 'reviews');
     }
 }

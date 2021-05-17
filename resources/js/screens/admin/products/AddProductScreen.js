@@ -52,6 +52,7 @@ const AddProductScreen = ({ setOpenAddDialog, setRequestData, history }) => {
     const [brandName, setBrandName] = useState("");
     const [type, setType] = useState("");
     const [childCategory, setChildCategory] = useState("");
+    const [parentCategory, setParentCategory] = useState("");
     const [productName, setProductName] = useState("");
     const [productCode, setProductCode] = useState("");
     const [description, setDescription] = useState("");
@@ -75,7 +76,7 @@ const AddProductScreen = ({ setOpenAddDialog, setRequestData, history }) => {
     );
     const { productDetails } = productGetRelDetails;
 
-    const { brands, childCats, colors, sizes } = productDetails;
+    const { brands, childCats, parentCats, types, colors, sizes } = productDetails;
 
     const productCreate = useSelector((state) => state.productCreate);
     const { loading, success, error } = productCreate;
@@ -152,6 +153,7 @@ const AddProductScreen = ({ setOpenAddDialog, setRequestData, history }) => {
         formData.append("materialDescription", materialDescription);
         formData.append("type", type);
         formData.append("childCategory", childCategory);
+        formData.append("parentCategory", parentCategory);
         formData.append("colorNqty", JSON.stringify(colorNqty));
         formData.append("sizeNqty", JSON.stringify(sizeNqty));
 
@@ -176,6 +178,8 @@ const AddProductScreen = ({ setOpenAddDialog, setRequestData, history }) => {
             width: "65rem",
         });
     };
+    console.log(sizeNqty)
+
 
     return (
         <div>
@@ -198,28 +202,20 @@ const AddProductScreen = ({ setOpenAddDialog, setRequestData, history }) => {
                                 variant="outlined"
                                 className={classes.formControl}
                             >
-                                <InputLabel id="brand">Brand</InputLabel>
+                                <InputLabel id="type">Type</InputLabel>
                                 <Select
-                                    labelId="brand"
-                                    id="brand-select"
-                                    onChange={(e) =>
-                                        setBrandName(e.target.value)
-                                    }
-                                    label="Brand"
-                                    value={brandName}
+                                    labelId="type"
+                                    id="type-select"
+                                    onChange={(e) => setType(e.target.value)}
+                                    label="Type"
+                                    value={type}
                                     defaultValue=""
                                 >
-                                    {brands &&
-                                        brands.map((brand) => {
-                                            return (
-                                                <MenuItem
-                                                    value={brand.id}
-                                                    key={brand.id}
-                                                >
-                                                    {brand.brand_name}
-                                                </MenuItem>
-                                            );
-                                        })}
+                                    {types && types.map(type => {
+                                        return (
+                                            <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
+                                        )
+                                    })}
                                 </Select>
                             </FormControl>
                         </div>
@@ -230,19 +226,20 @@ const AddProductScreen = ({ setOpenAddDialog, setRequestData, history }) => {
                                 variant="outlined"
                                 className={classes.formControl}
                             >
-                                <InputLabel id="type">Type</InputLabel>
+                                <InputLabel id="parcat">Parent Category</InputLabel>
                                 <Select
-                                    labelId="type"
-                                    id="type-select"
-                                    onChange={(e) => setType(e.target.value)}
-                                    label="Type"
-                                    value={type}
+                                    labelId="parcat"
+                                    id="parcat-select"
+                                    onChange={(e) => setParentCategory(e.target.value)}
+                                    label="Parent Category"
+                                    value={parentCategory}
                                     defaultValue=""
                                 >
-                                    <MenuItem value={"MEN"}>MEN</MenuItem>
-                                    <MenuItem value={"WOMEN"}>WOMEN</MenuItem>
-                                    <MenuItem value={"BOYS"}>BOYS</MenuItem>
-                                    <MenuItem value={"GIRLS"}>GIRLS</MenuItem>
+                                    {parentCats && parentCats.map(parentCat => {
+                                        return (
+                                            <MenuItem key={parentCat.id} value={parentCat.id}>{parentCat.parent_category_name}</MenuItem>
+                                        )
+                                    })}
                                 </Select>
                             </FormControl>
                         </div>
@@ -276,6 +273,38 @@ const AddProductScreen = ({ setOpenAddDialog, setRequestData, history }) => {
                                                     {
                                                         childCat.child_category_name
                                                     }
+                                                </MenuItem>
+                                            );
+                                        })}
+                                </Select>
+                            </FormControl>
+                        </div>
+
+                        <div className="form__field">
+                            <FormControl
+                                required
+                                variant="outlined"
+                                className={classes.formControl}
+                            >
+                                <InputLabel id="brand">Brand</InputLabel>
+                                <Select
+                                    labelId="brand"
+                                    id="brand-select"
+                                    onChange={(e) =>
+                                        setBrandName(e.target.value)
+                                    }
+                                    label="Brand"
+                                    value={brandName}
+                                    defaultValue=""
+                                >
+                                    {brands &&
+                                        brands.map((brand) => {
+                                            return (
+                                                <MenuItem
+                                                    value={brand.id}
+                                                    key={brand.id}
+                                                >
+                                                    {brand.brand_name}
                                                 </MenuItem>
                                             );
                                         })}

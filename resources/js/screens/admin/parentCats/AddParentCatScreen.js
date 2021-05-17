@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DialogContent, DialogTitle } from "@material-ui/core";
-import { TextField, Button, Divider } from "@material-ui/core";
+import { DialogContent, DialogTitle, TextField, Button, Divider } from "@material-ui/core";
 import Swal from "sweetalert2";
-import { adminListParentCats, createParentCat } from "../../../actions/parentCatActions";
+import {
+    adminListParentCats,
+    createParentCat,
+} from "../../../actions/parentCatActions";
 import { PARENT_CATEGORY_ADMIN_LIST_RESET } from "../../../constants/parentCatConstants";
 import Loader from "../../../components/Loader";
 import Message from "../../../components/Message";
 
 const AddParentCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
+
     const [parentCatName, setParentCatName] = useState("");
     const [successModal, setSuccessModal] = useState(false);
 
@@ -22,12 +25,13 @@ const AddParentCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
             dispatch({ type: PARENT_CATEGORY_ADMIN_LIST_RESET });
             dispatch(adminListParentCats());
         }
+        dispatch(getEditProductRelDetails());
     }, [dispatch, history, successModal, success]);
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(createParentCat(parentCatName));
+        dispatch(createParentCat(parentCatName)); 
 
         setRequestData(new Date());
         setSuccessModal(true);
@@ -45,7 +49,9 @@ const AddParentCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
 
     return (
         <div>
-            <DialogTitle id="draggable-dialog-title">Add Parent Category</DialogTitle>
+            <DialogTitle id="draggable-dialog-title">
+                Add Parent Category
+            </DialogTitle>
             <Divider />
             <DialogContent>
                 {loading ? (
@@ -59,7 +65,7 @@ const AddParentCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
                                 <TextField
                                     variant="outlined"
                                     name="parentCatName"
-                                    label="Parent Category Name"
+                                    label="Parent Category Name needs to be unique"
                                     fullWidth
                                     onChange={(e) =>
                                         setParentCatName(e.target.value)
@@ -82,7 +88,7 @@ const AddParentCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
                 )}
             </DialogContent>
         </div>
-    )
-}
+    );
+};
 
-export default AddParentCatScreen
+export default AddParentCatScreen;

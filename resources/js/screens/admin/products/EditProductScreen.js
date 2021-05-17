@@ -32,6 +32,8 @@ import {
 import NumberFormat from "react-number-format";
 import { adminListBrands } from "../../../actions/brandActions";
 import { adminListChildCats } from "../../../actions/childCatActions";
+import { adminListParentCats } from "../../../actions/parentCatActions";
+import { adminListTypes } from "../../../actions/typeActions";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -59,6 +61,7 @@ const EditProductScreen = ({
 
     const [brandName, setBrandName] = useState("");
     const [childCategory, setChildCategory] = useState("");
+    const [parentCategory, setParentCategory] = useState("");
     const [productName, setProductName] = useState("");
     const [productCode, setProductCode] = useState("");
     const [price, setPrice] = useState("");
@@ -92,6 +95,12 @@ const EditProductScreen = ({
     const childCatAdminList = useSelector((state) => state.childCatAdminList);
     const { childCats } = childCatAdminList;
 
+    const parentCatAdminList = useSelector((state) => state.parentCatAdminList);
+    const { parentCats } = parentCatAdminList;
+
+    const typeAdminList = useSelector((state) => state.typeAdminList);
+    const { types, loading: typeLoading, error: typeError } = typeAdminList;
+
     const productEdit = useSelector((state) => state.productEdit);
     const {
         loading: loadingEdit,
@@ -109,6 +118,8 @@ const EditProductScreen = ({
             } else {
                 dispatch(adminListBrands());
                 dispatch(adminListChildCats());
+                dispatch(adminListParentCats());
+                dispatch(adminListTypes());
                 dispatch(getEditProductRelDetails());
                 setProductName(product.name);
                 setProductCode(product.product_code);
@@ -116,23 +127,26 @@ const EditProductScreen = ({
                 setDiscount(product.discount);
                 setDescription(product.description);
                 setMaterialDescription(product.material_description);
-                setType(product.type);
+                setType(product.types[0].id);
                 setBrandName(product.brand_id);
                 setChildCategory(product.child_categories[0].id);
+                setParentCategory(product.parent_categories[0].id);
 
-                product.colors && product.colors.map(color => {
-                    setColorNqty((prevColorNqty) => ({
-                        ...prevColorNqty,
-                        [color.id]: color.pivot.color_quantity,
-                    }))
-                })
+                product.colors &&
+                    product.colors.map((color) => {
+                        setColorNqty((prevColorNqty) => ({
+                            ...prevColorNqty,
+                            [color.id]: color.pivot.color_quantity,
+                        }));
+                    });
 
-                product.sizes && product.sizes.map(size => {
-                    setSizeNqty((prevSizeNqty) => ({
-                        ...prevSizeNqty,
-                        [size.id]: size.pivot.size_quantity,
-                    }))
-                })
+                product.sizes &&
+                    product.sizes.map((size) => {
+                        setSizeNqty((prevSizeNqty) => ({
+                            ...prevSizeNqty,
+                            [size.id]: size.pivot.size_quantity,
+                        }));
+                    });
             }
         }
 
@@ -194,6 +208,7 @@ const EditProductScreen = ({
                 type,
                 brandName,
                 childCategory,
+                parentCategory,
                 colorNqty,
                 sizeNqty
             )
@@ -220,10 +235,10 @@ const EditProductScreen = ({
             <DialogContent>
                 {loadingEdit && <Loader />}
                 {errorEdit && <Message variant="error">{errorEdit}</Message>}
-                {loading ? (
+                {typeLoading ? (
                     <Loader />
-                ) : error ? (
-                    <Message variant="error">{error}</Message>
+                ) : typeError ? (
+                    <Message variant="error">{typeError}</Message>
                 ) : (
                     <form onSubmit={submitHandler}>
                         <div className="form">
@@ -232,25 +247,60 @@ const EditProductScreen = ({
                                     variant="outlined"
                                     className={classes.formControl}
                                 >
-                                    <InputLabel id="brand">Brand</InputLabel>
+                                    <InputLabel id="type">Type</InputLabel>
                                     <Select
-                                        labelId="brand"
-                                        id="brand-select"
+                                        labelId="type"
+                                        id="type-select"
                                         onChange={(e) =>
-                                            setBrandName(e.target.value)
+                                            setType(e.target.value)
                                         }
-                                        label="Brand"
-                                        value={brandName}
-                                        defaultValue=""
+                                        label="Type"
+                                        value={type}
+                                        defaultValue={""}
                                     >
-                                        {brands.data &&
-                                            brands.data.map((brand) => {
+                                        {types.data &&
+                                            types.data.map((type) => {
                                                 return (
                                                     <MenuItem
-                                                        value={brand.id}
-                                                        key={brand.id}
+                                                        value={type.id}
+                                                        key={type.id}
                                                     >
-                                                        {brand.brand_name}
+                                                        {type.name}
+                                                    </MenuItem>
+                                                );
+                                            })}
+                                    </Select>
+                                </FormControl>
+                            </div>
+
+                            <div className="form__field">
+                                <FormControl
+                                    variant="outlined"
+                                    className={classes.formControl}
+                                >
+                                    <InputLabel id="parentCat">
+                                        Parent Category
+                                    </InputLabel>
+                                    <Select
+                                        labelId="parentCat"
+                                        id="parentCat-select"
+                                        onChange={(e) =>
+                                            setParentCategory(e.target.value)
+                                        }
+                                        label="Parent Category"
+                                        value={parentCategory}
+                                        defaultValue={""}
+                                    >
+                                        {parentCats.data &&
+                                            parentCats.data.map((parentCat) => {
+                                                return (
+                                                    <MenuItem
+                                                        value={parentCat.id}
+                                                        key={parentCat.id}
+                                                    >
+                                                        {
+                                                            parentCat.parent_category_name
+                                                        }
                                                     </MenuItem>
                                                 );
                                             })}
@@ -274,7 +324,7 @@ const EditProductScreen = ({
                                         }
                                         label="Child Category"
                                         value={childCategory}
-                                        defaultValue=""
+                                        defaultValue={""}
                                     >
                                         {childCats.data &&
                                             childCats.data.map((childCat) => {
@@ -298,25 +348,28 @@ const EditProductScreen = ({
                                     variant="outlined"
                                     className={classes.formControl}
                                 >
-                                    <InputLabel id="type">Type</InputLabel>
+                                    <InputLabel id="brand">Brand</InputLabel>
                                     <Select
-                                        labelId="type"
-                                        id="type-select"
+                                        labelId="brand"
+                                        id="brand-select"
                                         onChange={(e) =>
-                                            setType(e.target.value)
+                                            setBrandName(e.target.value)
                                         }
-                                        label="Type"
-                                        value={type}
-                                        defaultValue=""
+                                        label="Brand"
+                                        value={brandName}
+                                        defaultValue={""}
                                     >
-                                        <MenuItem value={"MEN"}>MEN</MenuItem>
-                                        <MenuItem value={"WOMEN"}>
-                                            WOMEN
-                                        </MenuItem>
-                                        <MenuItem value={"BOYS"}>BOYS</MenuItem>
-                                        <MenuItem value={"GIRLS"}>
-                                            GIRLS
-                                        </MenuItem>
+                                        {brands.data &&
+                                            brands.data.map((brand) => {
+                                                return (
+                                                    <MenuItem
+                                                        value={brand.id}
+                                                        key={brand.id}
+                                                    >
+                                                        {brand.brand_name}
+                                                    </MenuItem>
+                                                );
+                                            })}
                                     </Select>
                                 </FormControl>
                             </div>
@@ -380,10 +433,8 @@ const EditProductScreen = ({
                             <div className="form__field">
                                 <NumberFormat
                                     isAllowed={(values) => {
-                                        const {
-                                            formattedValue,
-                                            floatValue,
-                                        } = values;
+                                        const { formattedValue, floatValue } =
+                                            values;
                                         return (
                                             formattedValue === "" ||
                                             floatValue <= 100

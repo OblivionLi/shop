@@ -24,9 +24,8 @@ const ProductsScreen = ({ history }) => {
     const user_perms = [];
 
     const [openAddDialog, setOpenAddDialog] = useState(false);
-    const [openAddProductImageDialog, setOpenAddProductImageDialog] = useState(
-        false
-    );
+    const [openAddProductImageDialog, setOpenAddProductImageDialog] =
+        useState(false);
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [openReplaceDialog, setOpenReplaceDialog] = useState(false);
     const [requestData, setRequestData] = useState(new Date());
@@ -308,11 +307,11 @@ const ProductsScreen = ({ history }) => {
                             },
                         },
                         {
-                            title: "For",
+                            title: "For Type",
                             field: "type",
                             render: (products) => {
                                 {
-                                    return products.type;
+                                    return products.type[0].name;
                                 }
                             },
                         },
@@ -391,6 +390,28 @@ const ProductsScreen = ({ history }) => {
                         return (
                             <div className="product__table">
                                 <div className="product__table-desc">
+                                    <div className="product__table-desc--d">
+                                        <h3>Product Parent Category</h3>
+                                        <hr className="product__table-hr" />
+                                        <p>
+                                            {
+                                                rowData.parentCategories[0]
+                                                    .parent_category_name
+                                            }
+                                        </p>
+                                    </div>
+                                    <hr />
+                                    <div className="product__table-desc--d">
+                                        <h3>Product Child Category</h3>
+                                        <hr className="product__table-hr" />
+                                        <p>
+                                            {
+                                                rowData.childCategories[0]
+                                                    .child_category_name
+                                            }
+                                        </p>
+                                    </div>
+                                    <hr />
                                     <div className="product__table-desc--d">
                                         <h3>Product Description</h3>
                                         <hr className="product__table-hr" />

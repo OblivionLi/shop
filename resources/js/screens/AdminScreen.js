@@ -26,15 +26,9 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import AnnouncementIcon from "@material-ui/icons/Announcement";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import BugReportIcon from "@material-ui/icons/BugReport";
-import RecentActorsIcon from "@material-ui/icons/RecentActors";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { logout } from "../actions/userActions";
-import PeopleIcon from "@material-ui/icons/People";
-import ListAltIcon from "@material-ui/icons/ListAlt";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import ProductsScreen from "../screens/admin/products/ProductsScreen";
 import BrandsScreen from "../screens/admin/brands/BrandsScreen";
@@ -51,6 +45,7 @@ import { AiOutlineBgColors } from "react-icons/ai";
 import { IoResizeSharp } from "react-icons/io5";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
 import { FaUsers, FaUsersCog, FaUserTag } from "react-icons/fa";
+import TypesScreen from "../screens/admin/types/TypesScreen";
 // import ReviewsScreen from "../screens/admin/review"
 
 const drawerWidth = 280;
@@ -394,6 +389,20 @@ const AdminScreen = ({ history }) => {
                                                 Child Cat.
                                             </Link>
                                         </ListItem>
+
+                                        <ListItem button>
+                                            <ListItemIcon>
+                                                <AccountTreeIcon
+                                                    className={classes.icons}
+                                                />
+                                            </ListItemIcon>
+                                            <Link
+                                                to="/admin/products/types"
+                                                className="admin--links"
+                                            >
+                                                Types
+                                            </Link>
+                                        </ListItem>
                                     </List>
                                 </Collapse>
 
@@ -497,6 +506,11 @@ const AdminScreen = ({ history }) => {
                                 <Route
                                     path="/admin/products/child-categories"
                                     component={ChildCatScreen}
+                                />
+
+                                <Route
+                                    path="/admin/products/types"
+                                    component={TypesScreen}
                                 />
 
                                 <Route

@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\PublicProductResource;
 use App\Models\Brand;
 use App\Models\ChildCategory;
 use App\Models\Color;
+use App\Models\ParentCategory;
 use App\Models\Product;
 use App\Models\ProductImages;
 use App\Models\Size;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -52,7 +55,6 @@ class ProductController extends Controller
         $product->material_description = $request->materialDescription;
         $product->rating = 0;
         $product->total_reviews = 0;
-        $product->type = $request->type;
         
         $totalQties = 0;
 
@@ -93,6 +95,8 @@ class ProductController extends Controller
 
         
         $product->childCategories()->attach(['child_category_id' => $request->childCategory]);
+        $product->parentCategories()->attach(['parent_category_id' => $request->parentCategory]);
+        $product->types()->attach(['type_id' => $request->type]);
         $product->colors()->sync($colorAttributes);
         $product->sizes()->sync($sizeAttributes);
 
@@ -133,7 +137,6 @@ class ProductController extends Controller
         $product->discount = $request->has('discount') ? ($request->discount > 0 ? $request->discount : null) : null;
         $product->description = $request->description;
         $product->material_description = $request->material_description;
-        $product->type = $request->type;
 
 
         $totalQties = 0;
@@ -158,10 +161,13 @@ class ProductController extends Controller
 
         $product->save();
 
+        $product->types()->sync($request->type);
+        
         $product->colors()->sync($colorAttributes);
         $product->sizes()->sync($sizeAttributes);
 
         $product->childCategories()->sync($request->child_cat);
+        $product->parentCategories()->sync($request->parent_cat);
 
         return response()->json(['success' => 'Product updated succesfully!']);
     }
@@ -200,6 +206,8 @@ class ProductController extends Controller
             'colors' => Color::all(),
             'sizes' => Size::all(),
             'childCats' => ChildCategory::all(),
+            'parentCats' => ParentCategory::all(),
+            'types' => Type::all()
         ];
 
         return response()->json($relData);

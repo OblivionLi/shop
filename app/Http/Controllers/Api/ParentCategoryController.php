@@ -18,7 +18,7 @@ class ParentCategoryController extends Controller
      */
     public function index()
     {
-        $parent_categories = ParentCategory::with('childCats')->get();
+        $parent_categories = ParentCategory::info()->get();
 
         return ParentCategoryResource::collection($parent_categories);
     }

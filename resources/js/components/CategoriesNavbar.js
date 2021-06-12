@@ -1,8 +1,27 @@
-import React, { useState } from "react";
-import { Button, Menu, MenuItem, Divider, Typography } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import {
+    adminListProducts,
+    getEditProductRelDetails,
+} from "../actions/productActions";
+import { adminListTypes } from "../actions/typeActions";
+import Loader from "./Loader";
+import Message from "./Message";
+import Swal from "sweetalert2";
+import Moment from "react-moment";
 
 const Navbar2 = () => {
+    const dispatch = useDispatch();
+
+    const productGetRelDetails = useSelector((state) => state.productGetRelDetails);
+    const { productDetails } = productGetRelDetails;
+
+    const { parentCats } = productDetails;
+
+    useEffect(() => {
+        dispatch(getEditProductRelDetails());
+    }, [dispatch]);
 
     return (
         <div className="main">
@@ -15,416 +34,38 @@ const Navbar2 = () => {
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleM"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleM"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleM"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleM"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleM"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkM"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
+                                {parentCats &&
+                                    parentCats.map((pCats) =>
+                                        pCats.type.name == "MEN" ? (
+                                            <ul key={pCats.id}>
+                                                <li>
+                                                    <a
+                                                        href="#"
+                                                        className="menu__content-titleM"
+                                                    >
+                                                        {
+                                                            pCats.parent_category_name
+                                                        }
+                                                    </a>
+                                                </li>
+
+                                                {pCats.child_cats.map(
+                                                    (childCat) => (
+                                                        <li key={childCat.id}>
+                                                            <a
+                                                                href="#"
+                                                                className="menu__content-lists--linkM"
+                                                            >
+                                                                {
+                                                                    childCat.child_category_name
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
+                                        ) : null
+                                    )}
                             </div>
                         </div>
                     </li>
@@ -436,88 +77,38 @@ const Navbar2 = () => {
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleF"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkF"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
+                                {parentCats &&
+                                    parentCats.map((pCats) =>
+                                        pCats.type.name == "WOMEN" ? (
+                                            <ul key={pCats.id}>
+                                                <li>
+                                                    <a
+                                                        href="#"
+                                                        className="menu__content-titleF"
+                                                    >
+                                                        {
+                                                            pCats.parent_category_name
+                                                        }
+                                                    </a>
+                                                </li>
+
+                                                {pCats.child_cats.map(
+                                                    (childCat) => (
+                                                        <li key={childCat.id}>
+                                                            <a
+                                                                href="#"
+                                                                className="menu__content-lists--linkF"
+                                                            >
+                                                                {
+                                                                    childCat.child_category_name
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
+                                        ) : null
+                                    )}
                             </div>
                         </div>
                     </li>
@@ -529,88 +120,38 @@ const Navbar2 = () => {
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleK"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkK"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
+                                {parentCats &&
+                                    parentCats.map((pCats) =>
+                                        pCats.type.name == "KIDS" ? (
+                                            <ul key={pCats.id}>
+                                                <li>
+                                                    <a
+                                                        href="#"
+                                                        className="menu__content-titleK"
+                                                    >
+                                                        {
+                                                            pCats.parent_category_name
+                                                        }
+                                                    </a>
+                                                </li>
+
+                                                {pCats.child_cats.map(
+                                                    (childCat) => (
+                                                        <li key={childCat.id}>
+                                                            <a
+                                                                href="#"
+                                                                className="menu__content-lists--linkK"
+                                                            >
+                                                                {
+                                                                    childCat.child_category_name
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
+                                        ) : null
+                                    )}
                             </div>
                         </div>
                     </li>
@@ -622,88 +163,38 @@ const Navbar2 = () => {
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-titleO"
-                                        >
-                                            Topwear
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            T-Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Casual Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Formal Shirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Sweatshirts
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Sweaters
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Jackets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Blazers {"&"} Coats
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Suits
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="menu__content-lists--linkO"
-                                        >
-                                            Rain Jackets
-                                        </a>
-                                    </li>
-                                </ul>
+                                {parentCats &&
+                                    parentCats.map((pCats) =>
+                                        pCats.type.name == "OFFERS" ? (
+                                            <ul key={pCats.id}>
+                                                <li>
+                                                    <a
+                                                        href="#"
+                                                        className="menu__content-titleO"
+                                                    >
+                                                        {
+                                                            pCats.parent_category_name
+                                                        }
+                                                    </a>
+                                                </li>
+
+                                                {pCats.child_cats.map(
+                                                    (childCat) => (
+                                                        <li key={childCat.id}>
+                                                            <a
+                                                                href="#"
+                                                                className="menu__content-lists--linkO"
+                                                            >
+                                                                {
+                                                                    childCat.child_category_name
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
+                                        ) : null
+                                    )}
                             </div>
                         </div>
                     </li>

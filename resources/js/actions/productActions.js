@@ -29,7 +29,10 @@ import {
     PRODUCT_IMAGE_DELETE_SUCCESS,
     PRODUCT_IMAGE_REPLACE_REQUEST,
     PRODUCT_IMAGE_REPLACE_SUCCESS,
-    PRODUCT_IMAGE_REPLACE_FAIL
+    PRODUCT_IMAGE_REPLACE_FAIL,
+    PRODUCT_ORDERBY_LIST_REQUEST,
+    PRODUCT_ORDERBY_LIST_SUCCESS,
+    PRODUCT_ORDERBY_LIST_FAIL
 
 } from "../constants/productConstants";
 
@@ -61,21 +64,29 @@ export const adminListProducts = () => async (dispatch, getState) => {
     }
 };
 
+export const orderByListProducts = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: PRODUCT_ORDERBY_LIST_REQUEST });
+
+        const { data } = await Axios.get(`/api/listProductsBy`);
+
+        dispatch({ type: PRODUCT_ORDERBY_LIST_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_ORDERBY_LIST_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
 export const getEditProductRelDetails = () => async (dispatch, getState) => {
     try {
         dispatch({ type: PRODUCT_GET_REL_DETAILS_REQUEST });
 
-        const {
-            userLogin: { userInfo },
-        } = getState();
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${userInfo.access_token}`,
-            },
-        };
-
-        const { data } = await Axios.get(`/api/relDetails`, config);
+        const { data } = await Axios.get(`/api/relDetails`);
 
         dispatch({ type: PRODUCT_GET_REL_DETAILS_SUCCESS, payload: data });
     } catch (error) {
@@ -93,17 +104,7 @@ export const getEditProductDetails = (id) => async (dispatch, getState) => {
     try {
         dispatch({ type: PRODUCT_GET_DETAILS_REQUEST });
 
-        const {
-            userLogin: { userInfo },
-        } = getState();
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${userInfo.access_token}`,
-            },
-        };
-
-        const { data } = await Axios.get(`/api/product/${id}`, config);
+        const { data } = await Axios.get(`/api/product/${id}`);
 
         dispatch({ type: PRODUCT_GET_DETAILS_SUCCESS, payload: data });
     } catch (error) {
@@ -335,9 +336,9 @@ export const deleteProductImage = (id) => async (dispatch, getState) => {
 };
 
 export const createProductReview = (
-    id,
+    id, 
     user_id,
-    user_name,
+    username,
     rating,
     comment
 ) => async (dispatch, getState) => {
@@ -357,7 +358,7 @@ export const createProductReview = (
 
         await axios.post(
             `/api/product/${id}/review`,
-            { id, user_id, user_name, rating, comment },
+            { id, user_id, username, rating, comment },
             config
         );
 

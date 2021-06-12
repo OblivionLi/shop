@@ -16,7 +16,9 @@ class ParentCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'parent_category_name' => $this->parent_category_name,
+            'name' => $this->parent_category_name,
+            'childCats' => $this->childCats,
+            'type' => $this->type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             // 'products' => $this->products

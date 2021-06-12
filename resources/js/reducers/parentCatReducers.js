@@ -18,6 +18,10 @@ import {
     PARENT_CATEGORY_GET_DETAILS_REQUEST,
     PARENT_CATEGORY_GET_DETAILS_RESET,
     PARENT_CATEGORY_GET_DETAILS_SUCCESS,
+    PARENT_CATEGORY_LIST_FAIL,
+    PARENT_CATEGORY_LIST_REQUEST,
+    PARENT_CATEGORY_LIST_RESET,
+    PARENT_CATEGORY_LIST_SUCCESS,
 } from "../constants/parentCatConstants";
 
 export const parentCatAdminListReducer = (state = { parentCats: [] }, action) => {
@@ -29,6 +33,21 @@ export const parentCatAdminListReducer = (state = { parentCats: [] }, action) =>
         case PARENT_CATEGORY_ADMIN_LIST_FAIL:
             return { loading: false, error: action.payload };
         case PARENT_CATEGORY_ADMIN_LIST_RESET:
+            return {};
+        default:
+            return state;
+    }
+};
+
+export const parentCatListReducer = (state = { parentCats: [] }, action) => {
+    switch (action.type) {
+        case PARENT_CATEGORY_LIST_REQUEST:
+            return { loading: true, parentCats: [] };
+        case PARENT_CATEGORY_LIST_SUCCESS:
+            return { loading: false, parentCats: action.payload };
+        case PARENT_CATEGORY_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        case PARENT_CATEGORY_LIST_RESET:
             return {};
         default:
             return state;

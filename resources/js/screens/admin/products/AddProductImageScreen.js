@@ -7,9 +7,11 @@ import Message from "../../../components/Message";
 import {
     adminListProducts,
     createProductImage,
+    getEditProductDetails
 } from "../../../actions/productActions";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import ClearIcon from "@material-ui/icons/Clear";
+import { PRODUCT_IMAGE_CREATE_RESET } from "../../../constants/productConstants";
 
 const AddProductImageScreen = ({
     setOpenAddProductImageDialog,
@@ -21,8 +23,8 @@ const AddProductImageScreen = ({
     const [successModal, setSuccessModal] = useState(false);
     const dispatch = useDispatch();
 
-    const productAdminList = useSelector((state) => state.productAdminList);
-    const { products } = productAdminList;
+    const productGetEditDetails = useSelector((state) => state.productGetEditDetails);
+    const { product } = productGetEditDetails;
 
     const productImageCreate = useSelector((state) => state.productImageCreate);
     const {
@@ -32,11 +34,18 @@ const AddProductImageScreen = ({
     } = productImageCreate;
 
     useEffect(() => {
+        if (success) {
+            dispatch({ type: PRODUCT_IMAGE_CREATE_RESET });
+        } else {
+            if (!product.name || product.id != productId) {
+                dispatch(getEditProductDetails(productId));
+            }
+        }
+
         if (successModal) {
             dispatch(adminListProducts());
         }
-        dispatch(adminListProducts());
-    }, [dispatch, productId, success, successModal]);
+    }, [dispatch, productId, product, success, successModal]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -47,7 +56,7 @@ const AddProductImageScreen = ({
             formData.append("image", image);
         }
 
-        if (products.data[0].images.length < 5) {
+        if (product.images && product.images.length < 5) {
             dispatch(createProductImage(productId, formData));
 
             Swal.fire({

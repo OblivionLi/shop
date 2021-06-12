@@ -29,6 +29,7 @@
         display: flex;
         justify-content: space-evenly;
         flex-wrap: wrap;
+        gap: 1rem;
     }
 }
 
@@ -68,8 +69,14 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: 100%;
+        height: 583px;
+        width: 466px;
         padding: 1rem;
+
+        &--img {
+            max-height: 100%;
+            max-width: 100%;
+        }
 
         &--btns {
             display: flex;
@@ -80,7 +87,7 @@
             margin-top: auto;
         }
 
-        img {}
+        
     }
 
     &-hr {
@@ -91,4 +98,9 @@
 
 .form__field--upl {
     display: none;
+}
+
+.reviewEdited {
+    font-weight: 600;
+    font-size: 16px;
 }

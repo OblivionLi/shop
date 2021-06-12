@@ -1,0 +1,130 @@
+.product {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+    flex-wrap: wrap;
+
+    &-carousel {
+        height: 40rem;
+        width: 30rem;
+
+        &-img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    &-rating {
+        margin-bottom: 2rem;
+    }
+
+    &-actions {
+        width: 20rem;
+        text-align: center;
+        padding: 5px;
+        height: 100%;
+
+        &-detail {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    &-tabel {
+        width: 20rem;
+        height: 100%;
+        padding: 2rem;
+
+        &-form {
+            margin-top: 7.5px;
+            padding-top: 7.5px;
+        }
+    }
+
+    &-descriptions {
+        width: 100%;
+    }
+
+    &-description {
+        margin: 20px 0;
+        text-indent: 20px;
+    }
+}
+
+.inStock {
+    color: darkgreen;
+}
+
+.notInStock {
+    color: darkred;
+}
+
+.divider {
+    border-bottom: 1px solid $primary-text;
+}
+
+.sizes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.reviews-form {
+    padding: 15px;
+    width: 60%;
+    margin-top: 15px;
+}
+
+.review {
+    width: 60%;
+    margin-top: 15px;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid $primary-text;
+        margin: 20px 0;
+    }
+
+    &-top {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        margin-bottom: 10px;
+    }
+
+    &-bottom {
+        display: flex;
+        flex-direction: column;
+
+        margin-top: 10px;
+
+        &--comment {
+          text-indent: 20px;  
+        }
+
+        &--date {
+            align-self: flex-end;
+        }
+    }
+
+    &-card {
+        border: 1px solid $primary-text;
+        padding: 10px;
+    }
+
+    &-card:not(:last-child) {
+        margin-bottom: 15px;
+    }
+}
+
+.rating-from {
+    display: flex;
+    gap: 15px;
+}

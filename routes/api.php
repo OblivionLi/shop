@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\ParentCategoryController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SizeController;
 use App\Http\Controllers\Api\TypeController;
@@ -35,10 +36,22 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::patch('/reset-password/{user}', [AuthController::class, 'resetPassword']);
 Route::get('/reset-password/{token}', [AuthController::class, 'getToken']);
 
+Route::get('listParentCat', [ParentCategoryController::class, 'index']);
+Route::get('listProductsBy', [ProductController::class, 'getAllProducts']);
+Route::get('product/{product}', [ProductController::class, 'show']);
+Route::get('relDetails', [ProductController::class, 'getRelDataForAddingProduct']);
+Route::get('reviews/product/{product}', [ReviewController::class, 'reviewsPag']);
+
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('logout', [AuthController::class, 'logout']);
+    Route::post('product/{product}/review', [ReviewController::class, 'save']);
 
     Route::group(['middleware' => 'isAdmin'], function () {
+        Route::get('reviews', [ReviewController::class, 'index']);
+        Route::get('reviews/{review}', [ReviewController::class, 'show']);
+        Route::patch('reviews/{review}', [ReviewController::class, 'update']);
+        Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
+
         Route::get('users', [UserController::class, 'index']);
         Route::get('users/{user}', [UserController::class, 'show']);
         Route::patch('users/{user}', [UserController::class, 'update']);
@@ -52,10 +65,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         Route::get('product', [ProductController::class, 'index']);
         Route::post('product', [ProductController::class, 'store']);
-        Route::get('product/{product}', [ProductController::class, 'show']);
         Route::patch('product/{product}', [ProductController::class, 'update']);
         Route::delete('product/{product}', [ProductController::class, 'destroy']);
-        Route::get('relDetails', [ProductController::class, 'getRelDataForAddingProduct']);
         Route::post('productImage/{productId}', [ProductController::class, 'addNewImage']);
         Route::post('RproductImage/{productImageId}', [ProductController::class, 'replaceImage']);
         Route::delete('productImage/{productImageId}', [ProductController::class, 'productImageDestroy']);

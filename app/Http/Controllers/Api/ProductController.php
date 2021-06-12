@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductShowResource;
 use App\Http\Resources\PublicProductResource;
 use App\Models\Brand;
 use App\Models\ChildCategory;
@@ -12,6 +13,7 @@ use App\Models\Color;
 use App\Models\ParentCategory;
 use App\Models\Product;
 use App\Models\ProductImages;
+use App\Models\Review;
 use App\Models\Size;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -93,10 +95,9 @@ class ProductController extends Controller
             }
         }
 
-        
+        $product->types()->attach(['type_id' => $request->type]);
         $product->childCategories()->attach(['child_category_id' => $request->childCategory]);
         $product->parentCategories()->attach(['parent_category_id' => $request->parentCategory]);
-        $product->types()->attach(['type_id' => $request->type]);
         $product->colors()->sync($colorAttributes);
         $product->sizes()->sync($sizeAttributes);
 
@@ -111,10 +112,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::info()->find($id);
+        $product = Product::find($id);
 
-        return response()->json($product);
-        // return ProductResource::collection($product);
+        return new ProductShowResource($product);
+        // return response()->json($product);
     }
 
     /**
@@ -185,6 +186,14 @@ class ProductController extends Controller
         $product->sizes()->detach();
         $product->colors()->detach();
         $product->childCategories()->detach();
+        $product->parentCategories()->detach();
+        $product->types()->detach();
+
+        $reviews = Review::where('product_id', $id)->get();
+
+        foreach ($reviews as $review) {
+            $review->delete();
+        }
 
         $images = ProductImages::where('product_id', $id)->get();
 
@@ -205,9 +214,9 @@ class ProductController extends Controller
             'brands' => Brand::all(),
             'colors' => Color::all(),
             'sizes' => Size::all(),
-            'childCats' => ChildCategory::all(),
-            'parentCats' => ParentCategory::all(),
-            'types' => Type::all()
+            'childCats' => ChildCategory::info()->get(),
+            'parentCats' => ParentCategory::info()->get(),
+            'types' => Type::with('parentCats.childCats')->get()
         ];
 
         return response()->json($relData);
@@ -215,9 +224,9 @@ class ProductController extends Controller
 
     public function addNewImage(Request $request)
     {
-        $productImages = ProductImages::all();
+        $productImages = ProductImages::where('product_id', $request->productId)->get();
 
-        if ($productImages->count() <= 5) {
+        if ($productImages->count() < 5) {
             if ($request->hasFile('image')) {
                 $newImage = new ProductImages();
 
@@ -273,5 +282,16 @@ class ProductController extends Controller
         }
 
         return response()->json(['success' => 'Product Image deleted succesfully!']);
+    }
+
+    public function getAllProducts()
+    {
+        $products = [
+            'latestProducts' => Product::with('images')->orderBy('created_at', 'desc')->limit(3)->get(),
+            'mostDiscountedProducts' => Product::with('images')->orderBy('discount', 'desc')->limit(3)->get(),
+            'mostCommentedProducts' => Product::with('images')->orderBy('total_reviews', 'desc')->limit(3)->get()
+        ];
+
+        return response()->json($products);
     }
 }

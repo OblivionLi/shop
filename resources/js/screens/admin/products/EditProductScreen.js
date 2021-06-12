@@ -15,6 +15,7 @@ import {
     FormGroup,
     FormControlLabel,
     Checkbox,
+    Typography,
 } from "@material-ui/core";
 import Swal from "sweetalert2";
 import Loader from "../../../components/Loader";
@@ -242,6 +243,21 @@ const EditProductScreen = ({
                 ) : (
                     <form onSubmit={submitHandler}>
                         <div className="form">
+                            <Typography
+                                variant="caption"
+                                display="block"
+                                gutterBottom
+                            >
+                                * - means that the field is required
+                            </Typography>
+                            <Typography
+                                variant="caption"
+                                display="block"
+                                gutterBottom
+                            >
+                                - if Parent or Child Category is empty, that
+                                means that no category exist for chosen Type
+                            </Typography>
                             <div className="form__field">
                                 <FormControl
                                     variant="outlined"
@@ -258,8 +274,8 @@ const EditProductScreen = ({
                                         value={type}
                                         defaultValue={""}
                                     >
-                                        {types.data &&
-                                            types.data.map((type) => {
+                                        {types &&
+                                            types.map((type) => {
                                                 return (
                                                     <MenuItem
                                                         value={type.id}
@@ -292,18 +308,18 @@ const EditProductScreen = ({
                                         defaultValue={""}
                                     >
                                         {parentCats.data &&
-                                            parentCats.data.map((parentCat) => {
-                                                return (
-                                                    <MenuItem
-                                                        value={parentCat.id}
-                                                        key={parentCat.id}
-                                                    >
-                                                        {
-                                                            parentCat.parent_category_name
-                                                        }
-                                                    </MenuItem>
-                                                );
-                                            })}
+                                            parentCats.data.map(
+                                                (parentCat) =>
+                                                    type ==
+                                                        parentCat.type.id && (
+                                                        <MenuItem
+                                                            key={parentCat.id}
+                                                            value={parentCat.id}
+                                                        >
+                                                            {`${parentCat.name} (${parentCat.type.name})`}
+                                                        </MenuItem>
+                                                    )
+                                            )}
                                     </Select>
                                 </FormControl>
                             </div>
@@ -327,18 +343,19 @@ const EditProductScreen = ({
                                         defaultValue={""}
                                     >
                                         {childCats.data &&
-                                            childCats.data.map((childCat) => {
-                                                return (
-                                                    <MenuItem
-                                                        value={childCat.id}
-                                                        key={childCat.id}
-                                                    >
-                                                        {
-                                                            childCat.child_category_name
-                                                        }
-                                                    </MenuItem>
-                                                );
-                                            })}
+                                            childCats.data.map(
+                                                (childCat) =>
+                                                    parentCategory ==
+                                                        childCat.parentCat
+                                                            .id && (
+                                                        <MenuItem
+                                                            value={childCat.id}
+                                                            key={childCat.id}
+                                                        >
+                                                            {`${childCat.name} (${childCat.parentCat.parent_category_name} - ${childCat.parentCat.type.name})`}
+                                                        </MenuItem>
+                                                    )
+                                            )}
                                     </Select>
                                 </FormControl>
                             </div>

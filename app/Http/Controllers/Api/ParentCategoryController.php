@@ -34,6 +34,7 @@ class ParentCategoryController extends Controller
         $parent_category = new ParentCategory();
 
         $parent_category->parent_category_name = $request->parent_category_name;
+        $parent_category->type_id = $request->type;
 
         $parent_category->save();
 
@@ -48,9 +49,9 @@ class ParentCategoryController extends Controller
      */
     public function show($id)
     {
-        $parent_category = ParentCategory::find($id);
+        $parent_category = ParentCategory::with('type')->find($id);
 
-        return response()->json($parent_category);
+        return  response()->json($parent_category);
     }
 
     /**
@@ -65,6 +66,7 @@ class ParentCategoryController extends Controller
         $parent_category = ParentCategory::find($id);
 
         $parent_category->parent_category_name = $request->parent_category_name;
+        $parent_category->type_id = $request->type;
 
         $parent_category->save();
 
@@ -81,7 +83,6 @@ class ParentCategoryController extends Controller
     {
         $parent_category = ParentCategory::find($id);
         
-        $parent_category->childCats()->sync([]);
         $parent_category->delete();
 
         return response()->json(['success' => 'Parent Category deleted successfully']);

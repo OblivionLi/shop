@@ -16,9 +16,10 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = Type::with('parentCats')->get();
+        $types = Type::with('parentCats.childCats')->get();
 
-        return TypeResource::collection($types);
+        return response()->json($types);
+        // return TypeResource::collection($types);
     }
 
     /**
@@ -62,7 +63,7 @@ class TypeController extends Controller
     {
         $type = Type::find($id);
 
-        $type->name = $request->name;
+        $type->name = $request->type_name;
 
         $type->save();
 

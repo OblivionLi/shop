@@ -34,7 +34,7 @@ class ChildCategoryController extends Controller
         $child_category = new ChildCategory();
 
         $child_category->child_category_name = $request->child_category_name;
-        $child_category->child_category_quantity = 0;
+        $child_category->parent_category_id = $request->parent_category_name;
 
         $child_category->save();
 
@@ -49,7 +49,7 @@ class ChildCategoryController extends Controller
      */
     public function show($id)
     {
-        $child_category = ChildCategory::find($id);
+        $child_category = ChildCategory::with('parentCat', 'parentCat.type')->find($id);
 
         return response()->json($child_category);
     }
@@ -66,7 +66,7 @@ class ChildCategoryController extends Controller
         $child_category = ChildCategory::find($id);
 
         $child_category->child_category_name = $request->child_category_name;
-        $child_category->child_category_quantity = $request->child_category_quantity;
+        $child_category->parent_category_id = $request->parent_category_name;
 
         $child_category->save();
 

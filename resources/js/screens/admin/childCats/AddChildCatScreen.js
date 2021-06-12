@@ -1,15 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { DialogContent, DialogTitle } from "@material-ui/core";
+import {
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+} from "@material-ui/core";
 import { TextField, Button, Divider } from "@material-ui/core";
 import Swal from "sweetalert2";
-import { adminListChildCats, createChildCat } from "../../../actions/childCatActions";
+import {
+    adminListChildCats,
+    createChildCat,
+} from "../../../actions/childCatActions";
+import { getEditProductRelDetails } from "../../../actions/productActions";
 import { CHILD_CATEGORY_ADMIN_LIST_RESET } from "../../../constants/childCatConstants";
 import Loader from "../../../components/Loader";
 import Message from "../../../components/Message";
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: "0 auto",
+        minWidth: "100%",
+    },
+
+    checkboxes: {
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "2rem",
+    },
+
+    checkInputs: {
+        width: "100%",
+    },
+}));
+
 const AddChildCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
+    const classes = useStyles();
+
     const [childCatName, setChildCatName] = useState("");
+    const [parentCatName, setParentCatName] = useState("");
     const [successModal, setSuccessModal] = useState(false);
 
     const dispatch = useDispatch();
@@ -17,17 +49,25 @@ const AddChildCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
     const childCatCreate = useSelector((state) => state.childCatCreate);
     const { loading, success, error } = childCatCreate;
 
+    const productGetRelDetails = useSelector(
+        (state) => state.productGetRelDetails
+    );
+    const { productDetails } = productGetRelDetails;
+
+    const { parentCats } = productDetails;
+
     useEffect(() => {
         if (successModal) {
             dispatch({ type: CHILD_CATEGORY_ADMIN_LIST_RESET });
             dispatch(adminListChildCats());
         }
+        dispatch(getEditProductRelDetails());
     }, [dispatch, history, successModal, success]);
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(createChildCat(childCatName));
+        dispatch(createChildCat(childCatName, parentCatName));
 
         setRequestData(new Date());
         setSuccessModal(true);
@@ -45,7 +85,9 @@ const AddChildCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
 
     return (
         <div>
-            <DialogTitle id="draggable-dialog-title">Add Child Category</DialogTitle>
+            <DialogTitle id="draggable-dialog-title">
+                Add Child Category
+            </DialogTitle>
             <Divider />
             <DialogContent>
                 {loading ? (
@@ -67,6 +109,41 @@ const AddChildCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
                                     required
                                 />
                             </div>
+
+                            <div className="form__field">
+                                <FormControl
+                                    required
+                                    variant="outlined"
+                                    className={classes.formControl}
+                                >
+                                    <InputLabel id="parcat">
+                                        Parent Category
+                                    </InputLabel>
+                                    <Select
+                                        labelId="parcat"
+                                        id="parcat-select"
+                                        onChange={(e) =>
+                                            setParentCatName(e.target.value)
+                                        }
+                                        label="Parent Category"
+                                        value={parentCatName}
+                                        defaultValue=""
+                                        required
+                                    >
+                                        {parentCats &&
+                                            parentCats.map((parentCat) => {
+                                                return (
+                                                    <MenuItem
+                                                        key={parentCat.id}
+                                                        value={parentCat.id}
+                                                    >
+                                                        {`${parentCat.parent_category_name} (${parentCat.type.name})`}
+                                                    </MenuItem>
+                                                );
+                                            })}
+                                    </Select>
+                                </FormControl>
+                            </div>
                         </div>
 
                         <Button
@@ -82,7 +159,7 @@ const AddChildCatScreen = ({ setOpenAddDialog, setRequestData, history }) => {
                 )}
             </DialogContent>
         </div>
-    )
-}
+    );
+};
 
-export default AddChildCatScreen
+export default AddChildCatScreen;

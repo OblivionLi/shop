@@ -8,7 +8,10 @@ import Swal from "sweetalert2";
 import AddChildCatScreen from "./AddChildCatScreen";
 import EditChildCatScreen from "./EditChildCatScreen";
 import Moment from "react-moment";
-import { adminListChildCats, deleteChildCat } from "../../../actions/childCatActions";
+import {
+    adminListChildCats,
+    deleteChildCat,
+} from "../../../actions/childCatActions";
 
 const ChildCatScreen = ({ history }) => {
     const dispatch = useDispatch();
@@ -116,7 +119,9 @@ const ChildCatScreen = ({ history }) => {
                       setRequestData(new Date());
                       Swal.fire(
                           "Deleted!",
-                          "The child category with the id " + id + " has been deleted.",
+                          "The child category with the id " +
+                              id +
+                              " has been deleted.",
                           "success"
                       );
                   } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -146,7 +151,16 @@ const ChildCatScreen = ({ history }) => {
                     columns={[
                         {
                             title: "Name",
-                            field: "child_category_name",
+                            field: "name",
+                        },
+                        {
+                            title: "For Parent Category",
+                            field: "parentCat",
+                            render: (childCats) => {
+                                {
+                                    return `${childCats.parentCat.parent_category_name} (${childCats.parentCat.type.name})`; 
+                                }
+                            },
                         },
                         {
                             title: "Updated At",
@@ -253,7 +267,7 @@ const ChildCatScreen = ({ history }) => {
                 </DialogActions>
             </Dialog>
         </Paper>
-    )
-}
+    );
+};
 
-export default ChildCatScreen
+export default ChildCatScreen;

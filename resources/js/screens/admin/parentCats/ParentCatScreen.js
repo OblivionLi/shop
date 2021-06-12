@@ -146,7 +146,16 @@ const ParentCatScreen = ({ history }) => {
                     columns={[
                         {
                             title: "Name",
-                            field: "parent_category_name",
+                            field: "name",
+                        },
+                        {
+                            title: "For Type",
+                            field: "type",
+                            render: (parentCats) => {
+                                {
+                                    return parentCats.type.name;
+                                }
+                            },
                         },
                         {
                             title: "Created At",

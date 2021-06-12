@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { DialogContent, DialogTitle } from "@material-ui/core";
+import {
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    Select,
+    MenuItem,
+    InputLabel,
+} from "@material-ui/core";
 import { TextField, Button, Divider } from "@material-ui/core";
 import Swal from "sweetalert2";
 import Loader from "../../../components/Loader";
@@ -10,18 +18,45 @@ import {
     editParentCat,
     getEditParentCatDetails,
 } from "../../../actions/parentCatActions";
+import { adminListTypes } from "../../../actions/typeActions";
 import {
     PARENT_CATEGORY_EDIT_RESET,
     PARENT_CATEGORY_GET_DETAILS_RESET,
 } from "../../../constants/parentCatConstants";
 
-const EditParentCatScreen = ({ setOpenEditDialog, setRequestData, parentCatId }) => {
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: "0 auto",
+        minWidth: "100%",
+    },
+
+    checkboxes: {
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "2rem",
+    },
+
+    checkInputs: {
+        width: "100%",
+    },
+}));
+
+const EditParentCatScreen = ({
+    setOpenEditDialog,
+    setRequestData,
+    parentCatId,
+}) => {
+    const classes = useStyles();
+
     const [parentCatName, setParentCatName] = useState("");
+    const [type, setType] = useState("");
 
     const [successModal, setSuccessModal] = useState(false);
     const dispatch = useDispatch();
 
-    const parentCatGetEditDetails = useSelector((state) => state.parentCatGetEditDetails);
+    const parentCatGetEditDetails = useSelector(
+        (state) => state.parentCatGetEditDetails
+    );
     const { loading, error, parentCat } = parentCatGetEditDetails;
 
     const parentCatEdit = useSelector((state) => state.parentCatEdit);
@@ -31,15 +66,23 @@ const EditParentCatScreen = ({ setOpenEditDialog, setRequestData, parentCatId })
         success: successEdit,
     } = parentCatEdit;
 
+    const typeAdminList = useSelector((state) => state.typeAdminList);
+    const { types, loading: typesLoading } = typeAdminList;
+
     useEffect(() => {
         if (successEdit) {
             dispatch({ type: PARENT_CATEGORY_EDIT_RESET });
             dispatch({ type: PARENT_CATEGORY_GET_DETAILS_RESET });
         } else {
-            if (!parentCat.parent_category_name || parentCat.id != parentCatId) {
+            if (
+                !parentCat.parent_category_name ||
+                parentCat.id != parentCatId
+            ) {
                 dispatch(getEditParentCatDetails(parentCatId));
             } else {
+                dispatch(adminListTypes());
                 setParentCatName(parentCat.parent_category_name);
+                setType(parentCat.type.id);
             }
         }
 
@@ -51,7 +94,7 @@ const EditParentCatScreen = ({ setOpenEditDialog, setRequestData, parentCatId })
     const submitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(editParentCat(parentCatId, parentCatName));
+        dispatch(editParentCat(parentCatId, parentCatName, type));
 
         setRequestData(new Date());
         setSuccessModal(true);
@@ -69,7 +112,9 @@ const EditParentCatScreen = ({ setOpenEditDialog, setRequestData, parentCatId })
 
     return (
         <div>
-            <DialogTitle id="draggable-dialog-title">Edit Parent Category</DialogTitle>
+            <DialogTitle id="draggable-dialog-title">
+                Edit Parent Category
+            </DialogTitle>
             <Divider />
             <DialogContent>
                 {loadingEdit && <Loader />}
@@ -94,6 +139,41 @@ const EditParentCatScreen = ({ setOpenEditDialog, setRequestData, parentCatId })
                                     required
                                 />
                             </div>
+
+                            <div className="form__field">
+                                {typesLoading ? (
+                                    <Loader />
+                                ) : (
+                                    <FormControl
+                                        variant="outlined"
+                                        className={classes.formControl}
+                                    >
+                                        <InputLabel id="type">Type</InputLabel>
+                                        <Select
+                                            labelId="type"
+                                            id="type-select"
+                                            onChange={(e) =>
+                                                setType(e.target.value)
+                                            }
+                                            label="Type"
+                                            value={type}
+                                            defaultValue=""
+                                        >
+                                            {types &&
+                                                types.map((type) => {
+                                                    return (
+                                                        <MenuItem
+                                                            value={type.id}
+                                                            key={type.id}
+                                                        >
+                                                            {type.name}
+                                                        </MenuItem>
+                                                    );
+                                                })}
+                                        </Select>
+                                    </FormControl>
+                                )}
+                            </div>
                         </div>
 
                         <Button
@@ -109,7 +189,7 @@ const EditParentCatScreen = ({ setOpenEditDialog, setRequestData, parentCatId })
                 )}
             </DialogContent>
         </div>
-    )
-}
+    );
+};
 
-export default EditParentCatScreen
+export default EditParentCatScreen;

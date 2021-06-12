@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { DialogContent, DialogTitle } from "@material-ui/core";
+import {
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    Select,
+    MenuItem,
+    InputLabel,
+} from "@material-ui/core";
 import { TextField, Button, Divider } from "@material-ui/core";
 import Swal from "sweetalert2";
 import Loader from "../../../components/Loader";
@@ -14,15 +22,41 @@ import {
     CHILD_CATEGORY_EDIT_RESET,
     CHILD_CATEGORY_GET_DETAILS_RESET,
 } from "../../../constants/childCatConstants";
+import { adminListParentCats } from "../../../actions/parentCatActions";
 
-const EditChildCatScreen = ({ setOpenEditDialog, setRequestData, childCatId }) => {
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: "0 auto",
+        minWidth: "100%",
+    },
+
+    checkboxes: {
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "2rem",
+    },
+
+    checkInputs: {
+        width: "100%",
+    },
+}));
+
+const EditChildCatScreen = ({
+    setOpenEditDialog,
+    setRequestData,
+    childCatId,
+}) => {
+    const classes = useStyles();
+
     const [childCatName, setChildCatName] = useState("");
-    const [childCatQty, setChildCatQty] = useState("");
+    const [parentCategory, setParentCategory] = useState("");
 
     const [successModal, setSuccessModal] = useState(false);
     const dispatch = useDispatch();
 
-    const childCatGetEditDetails = useSelector((state) => state.childCatGetEditDetails);
+    const childCatGetEditDetails = useSelector(
+        (state) => state.childCatGetEditDetails
+    );
     const { loading, error, childCat } = childCatGetEditDetails;
 
     const childCatEdit = useSelector((state) => state.childCatEdit);
@@ -32,16 +66,20 @@ const EditChildCatScreen = ({ setOpenEditDialog, setRequestData, childCatId }) =
         success: successEdit,
     } = childCatEdit;
 
+    const parentCatAdminList = useSelector((state) => state.parentCatAdminList);
+    const { parentCats, loading: parentCatsLoading } = parentCatAdminList;
+
     useEffect(() => {
         if (successEdit) {
             dispatch({ type: CHILD_CATEGORY_EDIT_RESET });
             dispatch({ type: CHILD_CATEGORY_GET_DETAILS_RESET });
         } else {
-            if (!childCat.childCat_name || childCat.id != childCatId) {
+            if (!childCat.child_category_name || childCat.id != childCatId) {
                 dispatch(getEditChildCatDetails(childCatId));
             } else {
-                setChildCatName(childCat.childCat_name);
-                setChildCatQty(childCat.childCat_quantity);
+                dispatch(adminListParentCats());
+                setChildCatName(childCat.child_category_name);
+                setParentCategory(childCat.parent_cat.id);
             }
         }
 
@@ -53,7 +91,7 @@ const EditChildCatScreen = ({ setOpenEditDialog, setRequestData, childCatId }) =
     const submitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(editChildCat(childCatId, childCatName, childCatQty));
+        dispatch(editChildCat(childCatId, childCatName, parentCategory));
 
         setRequestData(new Date());
         setSuccessModal(true);
@@ -71,7 +109,9 @@ const EditChildCatScreen = ({ setOpenEditDialog, setRequestData, childCatId }) =
 
     return (
         <div>
-            <DialogTitle id="draggable-dialog-title">Edit Child Category</DialogTitle>
+            <DialogTitle id="draggable-dialog-title">
+                Edit Child Category
+            </DialogTitle>
             <Divider />
             <DialogContent>
                 {loadingEdit && <Loader />}
@@ -98,18 +138,48 @@ const EditChildCatScreen = ({ setOpenEditDialog, setRequestData, childCatId }) =
                             </div>
 
                             <div className="form__field">
-                                <TextField
-                                    variant="outlined"
-                                    name="childCatQty"
-                                    label="Child Category Quantity"
-                                    type="number"
-                                    fullWidth
-                                    value={childCatQty}
-                                    onChange={(e) =>
-                                        setChildCatQty(e.target.value)
-                                    }
-                                    required
-                                />
+                                {parentCatsLoading ? (
+                                    <Loader />
+                                ) : (
+                                    <FormControl
+                                        variant="outlined"
+                                        className={classes.formControl}
+                                    >
+                                        <InputLabel id="parentCat">
+                                            Parent Category
+                                        </InputLabel>
+                                        <Select
+                                            labelId="parentCat"
+                                            id="parentCat-select"
+                                            onChange={(e) =>
+                                                setParentCategory(
+                                                    e.target.value
+                                                )
+                                            }
+                                            label="Parent Category"
+                                            value={parentCategory}
+                                            defaultValue={""}
+                                        >
+                                            {parentCats.data &&
+                                                parentCats.data.map(
+                                                    (parentCat) => {
+                                                        return (
+                                                            <MenuItem
+                                                                value={
+                                                                    parentCat.id
+                                                                }
+                                                                key={
+                                                                    parentCat.id
+                                                                }
+                                                            >
+                                                                {`${parentCat.name} (${parentCat.type.name})`}
+                                                            </MenuItem>
+                                                        );
+                                                    }
+                                                )}
+                                        </Select>
+                                    </FormControl>
+                                )}
                             </div>
                         </div>
 
@@ -126,7 +196,7 @@ const EditChildCatScreen = ({ setOpenEditDialog, setRequestData, childCatId }) =
                 )}
             </DialogContent>
         </div>
-    )
-}
+    );
+};
 
-export default EditChildCatScreen
+export default EditChildCatScreen;

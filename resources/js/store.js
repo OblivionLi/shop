@@ -12,6 +12,7 @@ import {
     productImageCreateReducer,
     productImageDeleteReducer,
     productReviewCreateReducer,
+    productOrderByListReducer
 } from "./reducers/productReducers";
 import {
     brandAdminListReducer,
@@ -28,6 +29,14 @@ import {
     typeEditReducer,
     typeDeleteReducer,
 } from "./reducers/typeReducers";
+
+import {
+    reviewAdminListReducer,
+    reviewGetEditDetailsReducer,
+    reviewEditReducer,
+    reviewDeleteReducer,
+    reviewListPagReducer
+} from "./reducers/reviewReducers";
 
 import {
     sizeAdminListReducer,
@@ -82,6 +91,7 @@ import {
 
 import {
     parentCatAdminListReducer,
+    parentCatListReducer,
     parentCatCreateReducer,
     parentCatGetEditDetailsReducer,
     parentCatEditReducer,
@@ -99,6 +109,7 @@ const reducer = combineReducers({
     productImageCreate: productImageCreateReducer,
     productImageDelete: productImageDeleteReducer,
     productReviewCreate: productReviewCreateReducer,
+    productOrderByList: productOrderByListReducer,
 
     brandAdminList: brandAdminListReducer,
     brandCreate: brandCreateReducer,
@@ -112,6 +123,12 @@ const reducer = combineReducers({
     typeEdit: typeEditReducer,
     typeDelete: typeDeleteReducer,
 
+    reviewAdminList: reviewAdminListReducer,
+    reviewListPag: reviewListPagReducer,
+    reviewGetEditDetails: reviewGetEditDetailsReducer,
+    reviewEdit: reviewEditReducer,
+    reviewDelete: reviewDeleteReducer,
+
     sizeAdminList: sizeAdminListReducer,
     sizeCreate: sizeCreateReducer,
     sizeGetEditDetails: sizeGetEditDetailsReducer,
@@ -124,6 +141,7 @@ const reducer = combineReducers({
     childCatEdit: childCatEditReducer,
     childCatDelete: childCatDeleteReducer,
 
+    parentCatList: parentCatListReducer,
     parentCatAdminList: parentCatAdminListReducer,
     parentCatCreate: parentCatCreateReducer,
     parentCatGetEditDetails: parentCatGetEditDetailsReducer,

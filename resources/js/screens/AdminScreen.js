@@ -42,10 +42,12 @@ import PermissionsScreen from "../screens/admin/users/permissions/PermissionsScr
 import { GiClothes, GiFactory } from "react-icons/gi";
 import { TiFlowChildren } from "react-icons/ti";
 import { AiOutlineBgColors } from "react-icons/ai";
+import { BiCommentDetail } from "react-icons/bi";
 import { IoResizeSharp } from "react-icons/io5";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
 import { FaUsers, FaUsersCog, FaUserTag } from "react-icons/fa";
 import TypesScreen from "../screens/admin/types/TypesScreen";
+import ReviewsScreen from "./admin/reviews/ReviewsScreen";
 // import ReviewsScreen from "../screens/admin/review"
 
 const drawerWidth = 280;
@@ -403,6 +405,20 @@ const AdminScreen = ({ history }) => {
                                                 Types
                                             </Link>
                                         </ListItem>
+
+                                        <ListItem button>
+                                            <ListItemIcon>
+                                                <BiCommentDetail
+                                                    className={classes.icons}
+                                                />
+                                            </ListItemIcon>
+                                            <Link
+                                                to="/admin/products/reviews"
+                                                className="admin--links"
+                                            >
+                                                Reviews
+                                            </Link>
+                                        </ListItem>
                                     </List>
                                 </Collapse>
 
@@ -511,6 +527,11 @@ const AdminScreen = ({ history }) => {
                                 <Route
                                     path="/admin/products/types"
                                     component={TypesScreen}
+                                />
+
+                                <Route
+                                    path="/admin/products/reviews"
+                                    component={ReviewsScreen}
                                 />
 
                                 <Route

@@ -37,6 +37,10 @@ import {
     PRODUCT_IMAGE_REPLACE_REQUEST,
     PRODUCT_IMAGE_REPLACE_RESET,
     PRODUCT_IMAGE_REPLACE_SUCCESS,
+    PRODUCT_ORDERBY_LIST_FAIL,
+    PRODUCT_ORDERBY_LIST_REQUEST,
+    PRODUCT_ORDERBY_LIST_RESET,
+    PRODUCT_ORDERBY_LIST_SUCCESS,
 } from "../constants/productConstants";
 
 export const productAdminListReducer = (state = { products: [] }, action) => {
@@ -48,6 +52,21 @@ export const productAdminListReducer = (state = { products: [] }, action) => {
         case PRODUCT_ADMIN_LIST_FAIL:
             return { loading: false, error: action.payload };
         case PRODUCT_ADMIN_LIST_RESET:
+            return {};
+        default:
+            return state;
+    }
+};
+
+export const productOrderByListReducer = (state = { products: [] }, action) => {
+    switch (action.type) {
+        case PRODUCT_ORDERBY_LIST_REQUEST:
+            return { loading: true, products: [] };
+        case PRODUCT_ORDERBY_LIST_SUCCESS:
+            return { loading: false, products: action.payload };
+        case PRODUCT_ORDERBY_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        case PRODUCT_ORDERBY_LIST_RESET:
             return {};
         default:
             return state;

@@ -395,8 +395,8 @@ const ProductsScreen = ({ history }) => {
                                         <hr className="product__table-hr" />
                                         <p>
                                             {
-                                                rowData.parentCategories[0]
-                                                    .parent_category_name
+                                                rowData.parentCategories[0] ? rowData.parentCategories[0]
+                                                    .parent_category_name : '-'
                                             }
                                         </p>
                                     </div>
@@ -406,8 +406,8 @@ const ProductsScreen = ({ history }) => {
                                         <hr className="product__table-hr" />
                                         <p>
                                             {
-                                                rowData.childCategories[0]
-                                                    .child_category_name
+                                                rowData.childCategories[0] ? rowData.childCategories[0]
+                                                    .child_category_name : '-'
                                             }
                                         </p>
                                     </div>
@@ -435,7 +435,8 @@ const ProductsScreen = ({ history }) => {
                                                     className="product__table-image"
                                                     key={image.id}
                                                 >
-                                                    <img
+                                                    <img 
+                                                        className="product__table-image--img"
                                                         src={`http://127.0.0.1:8000/storage/${image.path}`}
                                                         alt={rowData.name}
                                                     />

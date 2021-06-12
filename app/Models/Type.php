@@ -20,6 +20,6 @@ class Type extends Model
 
     public function parentCats()
     {
-        return $this->belongsToMany(ParentCategory::class, 'type_parent_category');
+        return $this->hasMany(ParentCategory::class);
     }
 }

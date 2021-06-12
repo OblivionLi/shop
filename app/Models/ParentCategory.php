@@ -20,16 +20,16 @@ class ParentCategory extends Model
 
     public function childCats()
     {
-        return $this->belongsToMany(ChildCategory::class, 'child_category_parent_category');
+        return $this->hasMany(ChildCategory::class);
     }
 
-    public function types()
+    public function type()
     {
-        return $this->belongsToMany(Type::class, 'type_parent_category');
+        return $this->belongsTo(Type::class, 'type_id');
     }
 
     public function scopeInfo($query)
     {
-        return $query->with('childCats', 'types', 'products');
+        return $query->with('childCats', 'type', 'products');
     }
 }

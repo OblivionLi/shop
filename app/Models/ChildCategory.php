@@ -10,8 +10,7 @@ class ChildCategory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'child_category_name',
-        'child_category_quantity'
+        'child_category_name'
     ];
 
     public function products()
@@ -19,13 +18,13 @@ class ChildCategory extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function parentCats()
+    public function parentCat()
     {
-        return $this->belongsToMany(ParentCategory::class, 'child_category_parent_category');
+        return $this->belongsTo(ParentCategory::class, 'parent_category_id');
     }
 
     public function scopeInfo($query)
     {
-        return $query->with('products', 'parentCats');
+        return $query->with('products', 'parentCat', 'parentCat.type');
     }
 }

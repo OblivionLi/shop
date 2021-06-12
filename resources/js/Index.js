@@ -9,16 +9,26 @@ import RegisterScreen from './screens/public/users/RegisterScreen';
 import ResetPasswordScreen from './screens/public/users/ResetPasswordScreen';
 import ForgotPasswordScreen from './screens/public/users/ForgotPasswordScreen';
 import AdminScreen from './screens/AdminScreen'
+import ShowProductScreen from './screens/public/products/ShowProductScreen';
+import ReviewsScreen from './screens/public/products/ReviewsScreen';
 
 function Index() {
     return (
         <Router>
             <Switch>
+                {/* Users */}
                 <Route path="/" component={HomeScreen} exact />
                 <Route path="/login" component={LoginScreen} />
                 <Route path="/register" component={RegisterScreen} />
                 <Route path="/reset-password/:id" component={ResetPasswordScreen} />
                 <Route path="/forgot-password" component={ForgotPasswordScreen} />
+
+                {/* Products */}
+                <Route path="/product/:id" component={ShowProductScreen} />
+
+                {/* Reviews */}
+                <Route path="/reviews/product/:id" component={ReviewsScreen} exact />
+                <Route path="/reviews/product/:id/:page?" component={ReviewsScreen} />
 
                 {/* Admin View */}
                 <Route path="/admin" component={AdminScreen} />

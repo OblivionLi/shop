@@ -175,7 +175,7 @@ const TypesScreen = ({ history }) => {
                             }
                         },
                     ]}
-                    data={types.data}
+                    data={types}
                     actions={[
                         {
                             icon: "add",

@@ -70,6 +70,6 @@ class Product extends Model
 
     public function scopeInfo($query)
     {
-        return $query->with('brand', 'sizes', 'colors', 'childCategories', 'parentCategories', 'types', 'user', 'images', 'reviews');
+        return $query->with('brand', 'sizes', 'colors', 'childCategories', 'childCategories.parentCat', 'parentCategories', 'parentCategories.type', 'types', 'user', 'images', 'reviews');
     }
 }

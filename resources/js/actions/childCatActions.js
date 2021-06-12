@@ -45,7 +45,7 @@ export const adminListChildCats = () => async (dispatch, getState) => {
     }
 };
 
-export const createChildCat = (child_category_name) => async (dispatch, getState) => {
+export const createChildCat = (child_category_name, parent_category_name) => async (dispatch, getState) => {
     try {
         dispatch({ type: CHILD_CATEGORY_CREATE_REQUEST });
 
@@ -59,7 +59,7 @@ export const createChildCat = (child_category_name) => async (dispatch, getState
             },
         };
 
-        const { data } = await Axios.post(`/api/childCat`, { child_category_name }, config);
+        const { data } = await Axios.post(`/api/childCat`, { child_category_name, parent_category_name }, config);
 
         dispatch({ type: CHILD_CATEGORY_CREATE_SUCCESS, payload: data });
     } catch (error) {
@@ -101,7 +101,7 @@ export const getEditChildCatDetails = (id) => async (dispatch, getState) => {
     }
 };
 
-export const editChildCat = (childId, child_category_name, child_category_quantity) => async (
+export const editChildCat = (childId, child_category_name, parent_category_name) => async (
     dispatch,
     getState
 ) => {
@@ -122,7 +122,7 @@ export const editChildCat = (childId, child_category_name, child_category_quanti
             `/api/childCat/${childId}`,
             {
                 child_category_name,
-                child_category_quantity,
+                parent_category_name,
             },
             config
         );

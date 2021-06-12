@@ -220,10 +220,12 @@ const Navbar = () => {
             <AppBar position="static" className={classes.appbar}>
                 <Toolbar>
                     <div className="brand">
-                        <img
-                            src={`http://127.0.0.1:8000/images/logo.png`}
-                            className={classes.img}
-                        />
+                        <Link to="/">
+                            <img
+                                src={`http://127.0.0.1:8000/images/logo.png`}
+                                className={classes.img}
+                            />
+                        </Link>
 
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
@@ -267,10 +269,7 @@ const Navbar = () => {
                                 <AccountCircle />
                             </IconButton>
                         ) : (
-                            <Link
-                                to="/login"
-                                className={classes.registerLink}
-                            >
+                            <Link to="/login" className={classes.registerLink}>
                                 Login
                             </Link>
                         )}

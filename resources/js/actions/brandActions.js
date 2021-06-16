@@ -103,8 +103,7 @@ export const getEditBrandDetails = (id) => async (dispatch, getState) => {
 
 export const editBrand = (
     brandId,
-    brand_name,
-    brand_quantity
+    brand_name
 ) => async (dispatch, getState) => {
     try {
         dispatch({ type: BRAND_EDIT_REQUEST });
@@ -122,8 +121,7 @@ export const editBrand = (
         const { data } = await Axios.patch(
             `/api/brand/${brandId}`,
             {
-                brand_name,
-                brand_quantity
+                brand_name
             },
             config
         );

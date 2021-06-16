@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChildCategoryParentCategoryTable extends Migration
+class CreateAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateChildCategoryParentCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('child_category_parent_category', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('child_category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('address_id')->nullable()->constrained();
+            $table->string('country');
+            $table->string('city');
+            $table->text('address');
+            $table->string('postal_code');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateChildCategoryParentCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('child_category_parent_category');
+        Schema::dropIfExists('addresses');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterParentCategoriesTable extends Migration
+class CreateParentCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AlterParentCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('parent_categories', function (Blueprint $table) {
-            $table->renameColumn('child_category_name', 'parent_category_name');
+        Schema::create('parent_categories', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('type_id')->constrained();
+            $table->string('parent_category_name');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AlterParentCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('parent_categories', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('parent_categories');
     }
 }

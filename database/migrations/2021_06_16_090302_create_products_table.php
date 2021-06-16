@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->foreignId('brand_id')->constrained();
             $table->string('name');
             $table->string('product_code');
@@ -24,7 +25,6 @@ class CreateProductsTable extends Migration
             $table->text('material_description');
             $table->decimal('rating', 2, 1)->nullable();
             $table->integer('total_reviews')->nullable();
-            $table->string('type');
             $table->integer('total_quantities');
             $table->timestamps();
         });

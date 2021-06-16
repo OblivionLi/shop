@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropTables extends Migration
+class CreateColorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class DropTables extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('child_category_parent_category');
-        Schema::dropIfExists('type_parent_category');
+        Schema::create('colors', function (Blueprint $table) {
+            $table->id();
+            $table->string('color_name');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -24,6 +27,6 @@ class DropTables extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('colors');
     }
 }

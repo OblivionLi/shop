@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ModifyParentCategoriesTable extends Migration
+class CreateBrandsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ModifyParentCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('parent_categories', function (Blueprint $table) {
-            $table->foreignId('type_id')->constrained();
+        Schema::create('brands', function (Blueprint $table) {
+            $table->id();
+            $table->string('brand_name');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class ModifyParentCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('parent_categories', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('brands');
     }
 }

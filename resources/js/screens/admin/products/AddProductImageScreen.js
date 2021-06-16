@@ -37,7 +37,7 @@ const AddProductImageScreen = ({
         if (success) {
             dispatch({ type: PRODUCT_IMAGE_CREATE_RESET });
         } else {
-            if (!product.name || product.id != productId) {
+            if (!product.data || !product.data.name || product.data.id != productId) {
                 dispatch(getEditProductDetails(productId));
             }
         }
@@ -56,7 +56,7 @@ const AddProductImageScreen = ({
             formData.append("image", image);
         }
 
-        if (product.images && product.images.length < 5) {
+        if (product.data && product.data.images.length < 5) {
             dispatch(createProductImage(productId, formData));
 
             Swal.fire({

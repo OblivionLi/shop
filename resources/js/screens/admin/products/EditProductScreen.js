@@ -114,7 +114,7 @@ const EditProductScreen = ({
             dispatch({ type: PRODUCT_EDIT_RESET });
             dispatch({ type: PRODUCT_GET_DETAILS_RESET });
         } else {
-            if (!product.name || product.id != productId) {
+            if (!product.data || !product.data.name || product.data.id != productId) {
                 dispatch(getEditProductDetails(productId));
             } else {
                 dispatch(adminListBrands());
@@ -122,27 +122,27 @@ const EditProductScreen = ({
                 dispatch(adminListParentCats());
                 dispatch(adminListTypes());
                 dispatch(getEditProductRelDetails());
-                setProductName(product.name);
-                setProductCode(product.product_code);
-                setPrice(product.price);
-                setDiscount(product.discount);
-                setDescription(product.description);
-                setMaterialDescription(product.material_description);
-                setType(product.types[0].id);
-                setBrandName(product.brand_id);
-                setChildCategory(product.child_categories[0].id);
-                setParentCategory(product.parent_categories[0].id);
+                setProductName(product.data.name);
+                setProductCode(product.data.product_code);
+                setPrice(product.data.price);
+                setDiscount(product.data.discount);
+                setDescription(product.data.description);
+                setMaterialDescription(product.data.material_description);
+                setType(product.data.types[0].id);
+                setBrandName(product.data.brand.id);
+                setChildCategory(product.data.child_categories[0].id);
+                setParentCategory(product.data.parent_categories[0].id);
 
-                product.colors &&
-                    product.colors.map((color) => {
+                product.data &&
+                    product.data.colors.map((color) => {
                         setColorNqty((prevColorNqty) => ({
                             ...prevColorNqty,
                             [color.id]: color.pivot.color_quantity,
                         }));
                     });
 
-                product.sizes &&
-                    product.sizes.map((size) => {
+                product.data &&
+                    product.data.sizes.map((size) => {
                         setSizeNqty((prevSizeNqty) => ({
                             ...prevSizeNqty,
                             [size.id]: size.pivot.size_quantity,
@@ -496,8 +496,8 @@ const EditProductScreen = ({
                                     </FormLabel>
                                     <FormGroup row>
                                         <div className="form__field--checkboxesQty">
-                                            {product.colors &&
-                                                product.colors.map((color) => {
+                                            {product.data &&
+                                                product.data.colors.map((color) => {
                                                     return (
                                                         <div
                                                             className={
@@ -509,8 +509,8 @@ const EditProductScreen = ({
                                                                 control={
                                                                     <Checkbox
                                                                         defaultChecked={
-                                                                            product.colors &&
-                                                                            product.colors.some(
+                                                                            product.data &&
+                                                                            product.data.colors.some(
                                                                                 (
                                                                                     c
                                                                                 ) =>
@@ -574,8 +574,8 @@ const EditProductScreen = ({
                                             {productDetails.colors &&
                                                 productDetails.colors.map(
                                                     (color) => {
-                                                        return product.colors &&
-                                                            product.colors.some(
+                                                        return product.data &&
+                                                            product.data.colors.some(
                                                                 (c) =>
                                                                     c.id ===
                                                                     color.id
@@ -647,8 +647,8 @@ const EditProductScreen = ({
                                     </FormLabel>
                                     <FormGroup row>
                                         <div className="form__field--checkboxesQty">
-                                            {product.sizes &&
-                                                product.sizes.map((size) => {
+                                            {product.data &&
+                                                product.data.sizes.map((size) => {
                                                     return (
                                                         <div
                                                             className={
@@ -660,8 +660,8 @@ const EditProductScreen = ({
                                                                 control={
                                                                     <Checkbox
                                                                         defaultChecked={
-                                                                            product.sizes &&
-                                                                            product.sizes.some(
+                                                                            product.data &&
+                                                                            product.data.sizes.some(
                                                                                 (
                                                                                     c
                                                                                 ) =>
@@ -725,8 +725,8 @@ const EditProductScreen = ({
                                             {productDetails.sizes &&
                                                 productDetails.sizes.map(
                                                     (size) => {
-                                                        return product.sizes &&
-                                                            product.sizes.some(
+                                                        return product.data &&
+                                                            product.data.sizes.some(
                                                                 (c) =>
                                                                     c.id ===
                                                                     size.id

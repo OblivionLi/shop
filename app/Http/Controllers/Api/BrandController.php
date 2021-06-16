@@ -34,7 +34,6 @@ class BrandController extends Controller
         $brand = new Brand();
 
         $brand->brand_name = $request->brand_name;
-        $brand->brand_quantity = 0;
 
         $brand->save();
 
@@ -66,7 +65,6 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         $brand->brand_name = $request->brand_name;
-        $brand->brand_quantity = $request->brand_quantity;
 
         $brand->save();
 

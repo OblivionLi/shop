@@ -149,10 +149,6 @@ const BrandsScreen = ({ history }) => {
                             field: "brand_name",
                         },
                         {
-                            title: "Quantity",
-                            field: "brand_quantity",
-                        },
-                        {
                             title: 'Created At',
                             field: 'created_at',
                             render: brands => {

@@ -17,7 +17,6 @@ import {
 
 const EditBrandScreen = ({ setOpenEditDialog, setRequestData, brandId }) => {
     const [brandName, setBrandName] = useState("");
-    const [brandQty, setBrandQty] = useState("");
 
     const [successModal, setSuccessModal] = useState(false);
     const dispatch = useDispatch();
@@ -43,7 +42,6 @@ const EditBrandScreen = ({ setOpenEditDialog, setRequestData, brandId }) => {
                 dispatch(getEditBrandDetails(brandId));
             } else {
                 setBrandName(brand.brand_name);
-                setBrandQty(brand.brand_quantity);
             }
         }
 
@@ -55,7 +53,7 @@ const EditBrandScreen = ({ setOpenEditDialog, setRequestData, brandId }) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(editBrand(brandId, brandName, brandQty));
+        dispatch(editBrand(brandId, brandName));
 
         setRequestData(new Date());
         setSuccessModal(true);
@@ -95,21 +93,6 @@ const EditBrandScreen = ({ setOpenEditDialog, setRequestData, brandId }) => {
                                     value={brandName}
                                     onChange={(e) =>
                                         setBrandName(e.target.value)
-                                    }
-                                    required
-                                />
-                            </div>
-
-                            <div className="form__field">
-                                <TextField
-                                    variant="outlined"
-                                    name="brandQty"
-                                    label="Brand Quantity"
-                                    type="number"
-                                    fullWidth
-                                    value={brandQty}
-                                    onChange={(e) =>
-                                        setBrandQty(e.target.value)
                                     }
                                     required
                                 />

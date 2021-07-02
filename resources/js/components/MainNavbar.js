@@ -111,6 +111,8 @@ const Navbar = () => {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
+    const cart = useSelector((state) => state.cart);
+
     const logoutHandler = () => {
         dispatch(logout());
     };
@@ -165,9 +167,9 @@ const Navbar = () => {
                 <IconButton className={classes.icons}>
                     <ExitToAppIcon />
                 </IconButton>
-                <Link to="/" onClick={logoutHandler}>
+                <a href="/" onClick={logoutHandler}>
                     Logout
-                </Link>
+                </a>
             </MenuItem>
         </Menu>
     );
@@ -190,16 +192,15 @@ const Navbar = () => {
                 <a href="#">Contact</a>
             </MenuItem>
             <MenuItem>
-                <IconButton
-                    aria-label="show 11 new notifications"
-                    color="inherit"
-                    className={classes.icons}
-                >
-                    <Badge badgeContent={11} color="secondary">
+                <IconButton color="inherit" className={classes.icons}>
+                    <Badge
+                        badgeContent={cart.cartItems.length}
+                        color="secondary"
+                    >
                         <ShoppingCartIcon />
                     </Badge>
                 </IconButton>
-                <a href="#">Cart</a>
+                <Link to="/cart">Cart</Link>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -246,15 +247,19 @@ const Navbar = () => {
                         <IconButton color="inherit" className={classes.icons}>
                             <HelpIcon />
                         </IconButton>
-                        <IconButton
-                            aria-label="show 2 new notifications"
-                            color="inherit"
-                            className={classes.icons}
-                        >
-                            <Badge badgeContent={2} color="secondary">
-                                <ShoppingCartIcon />
-                            </Badge>
-                        </IconButton>
+                        <Link to="/cart">
+                            <IconButton
+                                color="inherit"
+                                className={classes.icons}
+                            >
+                                <Badge
+                                    badgeContent={cart.cartItems.length}
+                                    color="secondary"
+                                >
+                                    <ShoppingCartIcon />
+                                </Badge>
+                            </IconButton>
+                        </Link>
 
                         {userInfo ? (
                             <IconButton

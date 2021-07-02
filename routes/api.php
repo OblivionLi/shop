@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\ChildCategoryController;
 use App\Http\Controllers\Api\ColorController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ParentCategoryController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\ProductController;
@@ -41,19 +44,35 @@ Route::get('listProductsBy', [ProductController::class, 'getAllProducts']);
 Route::get('product/{product}', [ProductController::class, 'show']);
 Route::get('relDetails', [ProductController::class, 'getRelDataForAddingProduct']);
 Route::get('reviews/product/{product}', [ReviewController::class, 'reviewsPag']);
+Route::get('config/stripe', [CheckoutController::class, 'index']);
+Route::post('payment_intents', [CheckoutController::class, 'createPayIntent']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('logout', [AuthController::class, 'logout']);
     Route::post('product/{product}/review', [ReviewController::class, 'save']);
 
+    Route::post('order', [OrderController::class, 'store']);
+    Route::get('order/{order}', [OrderController::class, 'show']);
+    Route::patch('order/{order}/pay', [OrderController::class, 'updateOrderToPaid']);
+    
+    Route::get('address', [AddressController::class, 'index']);
+    Route::post('address', [AddressController::class, 'store']);
+    Route::get('address/{address}', [AddressController::class, 'show']);
+    Route::patch('address/{address}', [AddressController::class, 'update']);
+    Route::delete('address/{address}', [AddressController::class, 'destroy']);
+    
+    Route::get('users/{user}', [UserController::class, 'show']);
+    
     Route::group(['middleware' => 'isAdmin'], function () {
+        Route::get('admin/order', [OrderController::class, 'adminIndex']);
+        Route::patch('order/{order}/delivered', [OrderController::class, 'updateOrderToDelivered']);
+
         Route::get('reviews', [ReviewController::class, 'index']);
         Route::get('reviews/{review}', [ReviewController::class, 'show']);
         Route::patch('reviews/{review}', [ReviewController::class, 'update']);
         Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
 
         Route::get('users', [UserController::class, 'index']);
-        Route::get('users/{user}', [UserController::class, 'show']);
         Route::patch('users/{user}', [UserController::class, 'update']);
         Route::delete('users/{user}', [UserController::class, 'destroy']);
 

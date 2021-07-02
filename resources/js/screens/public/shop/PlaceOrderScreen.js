@@ -194,11 +194,11 @@ const PlaceOrderScreen = ({ match, history }) => {
 
                 <div>
                     <Paper className={classes.details}>
-                        <h3>Shipping Address</h3>
-                        <Divider />
-
                         <div className="placeorder">
                             <div className="placeorder-userDetails">
+                                <h3>Shipping Address</h3>
+                                <Divider />
+
                                 {addressLoading ? (
                                     <Loader />
                                 ) : (
@@ -252,6 +252,8 @@ const PlaceOrderScreen = ({ match, history }) => {
                                 </Message>
 
                                 <div className="cartList">
+                                    <h3>Items List</h3>
+                                    <Divider />
                                     <MaterialTable
                                         title="Cart List"
                                         columns={[

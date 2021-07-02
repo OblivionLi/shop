@@ -11,6 +11,10 @@ import ForgotPasswordScreen from './screens/public/users/ForgotPasswordScreen';
 import AdminScreen from './screens/AdminScreen'
 import ShowProductScreen from './screens/public/products/ShowProductScreen';
 import ReviewsScreen from './screens/public/products/ReviewsScreen';
+import CartScreen from './screens/public/shop/CartScreen';
+import PlaceOrderScreen from './screens/public/shop/PlaceOrderScreen';
+import ShippingScreen from './screens/public/shop/ShippingScreen';
+import ShowOrderScreen from './screens/public/shop/ShowOrderScreen';
 
 function Index() {
     return (
@@ -29,6 +33,14 @@ function Index() {
                 {/* Reviews */}
                 <Route path="/reviews/product/:id" component={ReviewsScreen} exact />
                 <Route path="/reviews/product/:id/:page?" component={ReviewsScreen} />
+
+                {/* Cart */}
+                <Route path="/cart/:id?" component={CartScreen} />
+                <Route path="/shipping/:id?" component={ShippingScreen} />
+                <Route path="/placeorder/:id?" component={PlaceOrderScreen} />
+
+                {/* Order */}
+                <Route path="/order/:id?" component={ShowOrderScreen} />
 
                 {/* Admin View */}
                 <Route path="/admin" component={AdminScreen} />

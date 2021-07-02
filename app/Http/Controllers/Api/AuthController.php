@@ -20,7 +20,7 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('addresses')->where('email', $request->email)->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
@@ -42,9 +42,11 @@ class AuthController extends Controller
                     'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
                     'id' => $user->id,
                     'name' => $user->name,
-                    'email' => $user->name,
+                    'email' => $user->email,
                     'role' => $user->roles,
-                    'details' => $details
+                    'details' => $details,
+                    'address' => $user->addresses,
+                    'orders' => $user->orders
                 ], 201);
             }
         }

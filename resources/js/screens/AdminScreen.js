@@ -45,10 +45,11 @@ import { AiOutlineBgColors } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { IoResizeSharp } from "react-icons/io5";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
-import { FaUsers, FaUsersCog, FaUserTag } from "react-icons/fa";
+import { FaUsers, FaUsersCog, FaUserTag, FaAddressBook, FaReceipt } from "react-icons/fa";
 import TypesScreen from "../screens/admin/types/TypesScreen";
 import ReviewsScreen from "./admin/reviews/ReviewsScreen";
-// import ReviewsScreen from "../screens/admin/review"
+import AddressesScreen from "./admin/addresses/AddressesScreen";
+import OrdersScreen from "./admin/orders/OrdersScreen";
 
 const drawerWidth = 280;
 
@@ -484,8 +485,35 @@ const AdminScreen = ({ history }) => {
                                                 Permissions
                                             </Link>
                                         </ListItem>
+                                        <ListItem button>
+                                            <ListItemIcon>
+                                                <FaAddressBook
+                                                    className={classes.icons}
+                                                />
+                                            </ListItemIcon>
+                                            <Link
+                                                to="/admin/users/addresses"
+                                                className="admin--links"
+                                            >
+                                                Addresses
+                                            </Link>
+                                        </ListItem>
                                     </List>
                                 </Collapse>
+
+                                <Divider />
+
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <FaReceipt className={classes.icons} />
+                                    </ListItemIcon>
+                                    <Link
+                                        to="/admin/orders"
+                                        className="admin--links"
+                                    >
+                                        Orders
+                                    </Link>
+                                </ListItem>
                             </List>
                         </Drawer>
                         <main className={classes.content}>
@@ -550,12 +578,16 @@ const AdminScreen = ({ history }) => {
                                     path="/admin/users/permissions"
                                     component={PermissionsScreen}
                                 />
+                                 
+                                <Route
+                                    path="/admin/users/addresses"
+                                    component={AddressesScreen}
+                                />
 
-                                {/* <Route
-                                    path='/admin/reviews'
-                                    component={ReviewsScreen}
-                                    
-                                /> */}
+                                <Route
+                                    path="/admin/orders"
+                                    component={OrdersScreen}
+                                />
                             </Switch>
                         </main>
                     </Router>

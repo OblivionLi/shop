@@ -23,6 +23,14 @@ import {
 } from "./reducers/brandReducers";
 
 import {
+    addressAdminListReducer,
+    addressCreateReducer,
+    addressGetEditDetailsReducer,
+    addressEditReducer,
+    addressDeleteReducer,
+} from "./reducers/addressReducers";
+
+import {
     typeAdminListReducer,
     typeCreateReducer,
     typeGetEditDetailsReducer,
@@ -98,6 +106,20 @@ import {
     parentCatDeleteReducer,
 } from "./reducers/parentCatReducers";
 
+import {
+    cartReducer
+} from "./reducers/cartReducers";
+
+import {
+    orderCreateReducer,
+    orderDetailsReducer,
+    orderPayReducer,
+    orderUserListReducer,
+    orderListReducer,
+    orderDeliverReducer,
+    orderAdminListReducer,
+} from "./reducers/orderReducers";
+
 const reducer = combineReducers({
     productAdminList: productAdminListReducer,
     productGetEditDetails: productGetEditDetailsReducer,
@@ -116,6 +138,12 @@ const reducer = combineReducers({
     brandGetEditDetails: brandGetEditDetailsReducer,
     brandEdit: brandEditReducer,
     brandDelete: brandDeleteReducer,
+
+    addressAdminList: addressAdminListReducer,
+    addressCreate: addressCreateReducer,
+    addressGetEditDetails: addressGetEditDetailsReducer,
+    addressEdit: addressEditReducer,
+    addressDelete: addressDeleteReducer,
 
     typeAdminList: typeAdminListReducer,
     typeCreate: typeCreateReducer,
@@ -174,15 +202,33 @@ const reducer = combineReducers({
     permissionEdit: permissionEditReducer,
     permissionCreate: permissionCreateReducer,
     permissionDelete: permissionDeleteReducer,
+
+    orderCreate: orderCreateReducer,
+    orderDetails: orderDetailsReducer,
+    orderList: orderListReducer,
+    orderPay: orderPayReducer,
+    orderDeliver: orderDeliverReducer,
+    listUserOrder: orderUserListReducer,
+    orderAdminList: orderAdminListReducer,
+
+    cart: cartReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
 
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [];
+
 const initialState = {
     userLogin: {
         userInfo: userInfoFromStorage,
+    },
+
+    cart: {
+        cartItems: cartItemsFromStorage,
     },
 };
 

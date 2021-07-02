@@ -89,15 +89,15 @@ const useStyles = makeStyles({
     },
 });
 
-const ShowProductScreen = ({ match }) => {
+const ShowProductScreen = ({ history, match }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
-    const [qty, setQty] = useState(1);
     const [size, setSize] = useState("");
     const [color, setColor] = useState("");
+    const [qty, setQty] = useState(1); 
 
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
@@ -125,7 +125,9 @@ const ShowProductScreen = ({ match }) => {
     }, [match, dispatch, successProductReview]);
 
     const addToCartHandler = () => {
-        history.push(`/cart/${match.params.id}?qty=${qty}`);
+        history.push(
+            `/cart/${match.params.id}?qty=${qty}&size=${size}&color=${color}`
+        );
     };
 
     const submitHandler = (e) => {
@@ -271,52 +273,12 @@ const ShowProductScreen = ({ match }) => {
                                         &euro;
                                         {data && data.price}
                                     </strike>
-                                    {/* <p>&euro; {data &&
-                                    data.price}</p> */}
                                 </div>
 
                                 <hr className="divider" />
 
                                 <div className="product-tabel-form">
                                     <form>
-                                        {/* <div className="form__field">
-                                            <FormControl
-                                                required
-                                                variant="outlined"
-                                                className={classes.formControl}
-                                                size="small"
-                                            >
-                                                <InputLabel id="quantity">
-                                                    Quantity
-                                                </InputLabel>
-                                                <Select
-                                                    labelId="quantity"
-                                                    id="quantity-select"
-                                                    value={qty}
-                                                    onChange={(e) =>
-                                                        setQty(e.target.value)
-                                                    }
-                                                    label="Quantity"
-                                                >
-                                                    {[
-                                                        ...Array(
-                                                            data &&
-                                                                data.total_quantities
-                                                        ).keys(),
-                                                    ].map((x) => (
-                                                        <MenuItem
-                                                            key={x + 1}
-                                                            value={x + 1}
-                                                        >
-                                                            {x + 1}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select>
-                                            </FormControl>
-                                        </div> */}
-
-                                        {/* <hr className="divider" /> */}
-
                                         <div className="form__field">
                                             <FormControl component="fieldset">
                                                 <FormLabel component="legend">
@@ -329,6 +291,7 @@ const ShowProductScreen = ({ match }) => {
                                                     onChange={(e) =>
                                                         setSize(e.target.value)
                                                     }
+                                                    required
                                                 >
                                                     {data &&
                                                         data.sizes &&
@@ -345,7 +308,9 @@ const ShowProductScreen = ({ match }) => {
                                                                         size.size_name
                                                                     }
                                                                     control={
-                                                                        <Radio />
+                                                                        <Radio
+                                                                            required
+                                                                        />
                                                                     }
                                                                     label={`${size.size_name} (${size.pivot.size_quantity})`}
                                                                 />
@@ -409,7 +374,9 @@ const ShowProductScreen = ({ match }) => {
                                                                             color.color_name
                                                                         }
                                                                         control={
-                                                                            <Radio />
+                                                                            <Radio
+                                                                                required
+                                                                            />
                                                                         }
                                                                         label={`${color.color_name} (${color.pivot.color_quantity})`}
                                                                     />
@@ -448,6 +415,9 @@ const ShowProductScreen = ({ match }) => {
                                             <Button
                                                 variant="contained"
                                                 color="primary"
+                                                type="button"
+                                                onClick={addToCartHandler}
+                                                disabled={data && data.total_quantities == 0 || size === "" || color === ""}
                                             >
                                                 Add to Cart
                                             </Button>

@@ -118,7 +118,7 @@ const ProductsListScreen = ({ history, match }) => {
         } else {
             axios
                 .get(
-                    `/api/products/type/${typeId}/parent-category/${parentCatId}?page=${page}`,
+                    `/api/products/type/${typeId}/parent-category/${parentCatId}/child-category/${childCatId}?page=${page}`,
                     {
                         params: selected,
                     }
@@ -303,10 +303,17 @@ const ProductsListScreen = ({ history, match }) => {
                             Home
                         </Link>
 
-                        <Typography color="textPrimary">
+                        <Link
+                            className={classes.breadLink1}
+                            to={`/products/type/${
+                                childCat.parent_cat &&
+                                childCat.parent_cat.type.name.toLowerCase()
+                            }`}
+                            aria-current="page"
+                        >
                             {childCat.parent_cat &&
                                 childCat.parent_cat.type.name}
-                        </Typography>
+                        </Link>
 
                         <Typography color="textPrimary">
                             {childCat.parent_cat &&

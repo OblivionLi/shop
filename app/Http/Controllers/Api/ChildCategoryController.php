@@ -49,7 +49,7 @@ class ChildCategoryController extends Controller
      */
     public function show($id)
     {
-        $child_category = ChildCategory::with('parentCat', 'parentCat.type')->find($id);
+        $child_category = ChildCategory::info()->find($id);
 
         return response()->json($child_category);
     }

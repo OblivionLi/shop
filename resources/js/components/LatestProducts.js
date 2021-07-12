@@ -110,8 +110,21 @@ const LatestProducts = () => {
                                                 </Link>
                                             </Button>
                                             <span color="inherit">
-                                                &euro;{latestProduct.price}
-                                            </span>
+                                                    &euro;
+                                                    {(
+                                                        latestProduct.price -
+                                                        (latestProduct.price *
+                                                            latestProduct.discount) /
+                                                            100
+                                                    ).toFixed(2)}
+                                                </span>
+                                                {" - "}
+                                                <strike>
+                                                    &euro;
+                                                    {
+                                                        latestProduct.price
+                                                    }
+                                                </strike>
                                             {/* <span color="inherit">&euro;9.99</span> */}
                                             <Box
                                                 component="fieldset"

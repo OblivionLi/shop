@@ -7,13 +7,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import HelpIcon from "@material-ui/icons/Help";
-import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -33,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
     },
     grow: {
         flexGrow: 1,
+        width: '80%',
+        margin: '0 auto'
     },
     appbar: {
         backgroundColor: "seashell",
@@ -42,44 +41,6 @@ const useStyles = makeStyles((theme) => ({
     },
     img: {
         color: "#3a446b",
-    },
-    search: {
-        position: "relative",
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade("#3a446b", 0.85),
-        "&:hover": {
-            backgroundColor: fade("#3a446b", 1),
-        },
-        margin: "0 auto",
-        width: "40%",
-        height: "100%",
-
-        "@media (max-width: 575.98px)": {
-            width: "100%",
-        },
-    },
-    searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: "100%",
-        position: "absolute",
-        pointerEvents: "none",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    inputRoot: {
-        color: "inherit",
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-
-        "@media (max-width: 575.98px)": {
-            width: "20ch",
-        },
     },
     sectionDesktop: {
         display: "none",
@@ -227,20 +188,6 @@ const Navbar = () => {
                                 className={classes.img}
                             />
                         </Link>
-
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{ "aria-label": "search" }}
-                            />
-                        </div>
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>

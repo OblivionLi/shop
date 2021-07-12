@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ParentCategoryController;
 use App\Http\Controllers\Api\PermissionController;
+use App\Http\Controllers\Api\PriceController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\RoleController;
@@ -31,7 +32,11 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+Route::get('brands/type/{type}/parent-category/{parentCat}/child-category/{childCat}', [BrandController::class, 'brands']);
+Route::get('sizes/type/{type}/parent-category/{parentCat}/child-category/{childCat}', [SizeController::class, 'sizes']);
+Route::get('colors/type/{type}/parent-category/{parentCat}/child-category/{childCat}', [ColorController::class, 'colors']);
+Route::get('products/type/{type}/parent-category/{parentCat}', [ProductController::class, 'products']);
+Route::get('prices', [PriceController::class, 'index']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
@@ -62,6 +67,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('address/{address}', [AddressController::class, 'destroy']);
     
     Route::get('users/{user}', [UserController::class, 'show']);
+    Route::get('profile/{profile}', [AuthController::class, 'getUser']);
+    Route::patch('profile/{profile}', [AuthController::class, 'updateUser']);
+
+    Route::get('childCat/{childCat}', [ChildCategoryController::class, 'show']);
     
     Route::group(['middleware' => 'isAdmin'], function () {
         Route::get('admin/order', [OrderController::class, 'adminIndex']);
@@ -129,7 +138,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         Route::get('childCat', [ChildCategoryController::class, 'index']);
         Route::post('childCat', [ChildCategoryController::class, 'store']);
-        Route::get('childCat/{childCat}', [ChildCategoryController::class, 'show']);
         Route::patch('childCat/{childCat}', [ChildCategoryController::class, 'update']);
         Route::delete('childCat/{childCat}', [ChildCategoryController::class, 'destroy']);
     });

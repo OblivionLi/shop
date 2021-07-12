@@ -22,9 +22,9 @@ const Navbar2 = () => {
             <nav className="main__navbar">
                 <ul className="main__navbar--lists">
                     <li className="main__navbar--list men">
-                        <a href="#men" className="menu">
+                        <Link to={`/products/type/${'men'}`} className="menu">
                             MEN
-                        </a>
+                        </Link>
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
@@ -33,14 +33,14 @@ const Navbar2 = () => {
                                         pCats.type.name == "MEN" ? (
                                             <ul key={pCats.id}>
                                                 <li>
-                                                    <a
-                                                        href="#"
+                                                    <Link
+                                                        to={`/products/type/${'men'}/parent-category/${pCats.parent_category_name.toLowerCase()}`}
                                                         className="menu__content-titleM"
                                                     >
                                                         {
                                                             pCats.parent_category_name
                                                         }
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 {pCats.child_cats.map(
@@ -65,9 +65,9 @@ const Navbar2 = () => {
                     </li>
 
                     <li className="main__navbar--list women">
-                        <a href="#men" className="menu">
+                        <Link to={`/products/type/${'women'}`} className="menu">
                             WOMEN
-                        </a>
+                        </Link>
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
@@ -76,14 +76,14 @@ const Navbar2 = () => {
                                         pCats.type.name == "WOMEN" ? (
                                             <ul key={pCats.id}>
                                                 <li>
-                                                    <a
-                                                        href="#"
+                                                    <Link
+                                                        to={`/products/type/${'women'}/parent-category/${pCats.parent_category_name}`}
                                                         className="menu__content-titleF"
                                                     >
                                                         {
                                                             pCats.parent_category_name
                                                         }
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 {pCats.child_cats.map(
@@ -108,9 +108,9 @@ const Navbar2 = () => {
                     </li>
 
                     <li className="main__navbar--list kids">
-                        <a href="#men" className="menu">
+                        <Link to={`/products/type/${'kids'}`} className="menu">
                             KIDS
-                        </a>
+                        </Link>
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
@@ -119,14 +119,14 @@ const Navbar2 = () => {
                                         pCats.type.name == "KIDS" ? (
                                             <ul key={pCats.id}>
                                                 <li>
-                                                    <a
-                                                        href="#"
+                                                    <Link
+                                                        to={`/products/type/${'kids'}/parent-category/${pCats.parent_category_name}`}
                                                         className="menu__content-titleK"
                                                     >
                                                         {
                                                             pCats.parent_category_name
                                                         }
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 {pCats.child_cats.map(
@@ -151,9 +151,9 @@ const Navbar2 = () => {
                     </li>
 
                     <li className="main__navbar--list offers">
-                        <a href="#men" className="menu">
+                        <Link to={`/products/type/${'offers'}`} className="menu">
                             OFFERS
-                        </a>
+                        </Link>
 
                         <div className="menu__content">
                             <div className="menu__content-lists">
@@ -162,14 +162,14 @@ const Navbar2 = () => {
                                         pCats.type.name == "OFFERS" ? (
                                             <ul key={pCats.id}>
                                                 <li>
-                                                    <a
-                                                        href="#"
+                                                    <Link
+                                                        to={`/products/type/${'offers'}/parent-category/${pCats.parent_category_name}`}
                                                         className="menu__content-titleO"
                                                     >
                                                         {
                                                             pCats.parent_category_name
                                                         }
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 {pCats.child_cats.map(

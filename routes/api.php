@@ -32,10 +32,28 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+
+
+
+// Routes to display products with filters by type
+Route::get('brands/type/{type}', [BrandController::class, 'brandsByType']);
+Route::get('sizes/type/{type}', [SizeController::class, 'sizesByType']);
+Route::get('colors/type/{type}', [ColorController::class, 'colorsByType']);
+Route::get('products/type/{type}', [ProductController::class, 'productsByType']);
+
+// Routes to display products with filters by parent category
+Route::get('brands/type/{type}/parent-category/{parentCat}', [BrandController::class, 'brandsByParentCategory']);
+Route::get('sizes/type/{type}/parent-category/{parentCat}', [SizeController::class, 'sizesByParentCategory']);
+Route::get('colors/type/{type}/parent-category/{parentCat}', [ColorController::class, 'colorsByParentCategory']);
+Route::get('products/type/{type}/parent-category/{parentCat}', [ProductController::class, 'productsByParentCategory']);
+
+// Route to display products with filters
 Route::get('brands/type/{type}/parent-category/{parentCat}/child-category/{childCat}', [BrandController::class, 'brands']);
 Route::get('sizes/type/{type}/parent-category/{parentCat}/child-category/{childCat}', [SizeController::class, 'sizes']);
 Route::get('colors/type/{type}/parent-category/{parentCat}/child-category/{childCat}', [ColorController::class, 'colors']);
-Route::get('products/type/{type}/parent-category/{parentCat}', [ProductController::class, 'products']);
+Route::get('products/type/{type}/parent-category/{parentCat}/child-category/{childCat}', [ProductController::class, 'products']);
+
 Route::get('prices', [PriceController::class, 'index']);
 
 Route::post('register', [AuthController::class, 'register']);
@@ -141,24 +159,4 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::patch('childCat/{childCat}', [ChildCategoryController::class, 'update']);
         Route::delete('childCat/{childCat}', [ChildCategoryController::class, 'destroy']);
     });
-
-   
-
-    // Route::get('users', 'App\Http\Controllers\Api\UserController@index');
-    // Route::get('users/{user}', 'App\Http\Controllers\Api\UserController@show');
-    // Route::patch('users/{user}', 'App\Http\Controllers\Api\UserController@update')->middleware('isAdmin');
-    // Route::delete('users/{user}', 'App\Http\Controllers\Api\UserController@destroy')->middleware('isAdmin');
-    // Route::get('profile', 'App\Http\Controllers\Api\AuthController@user');
-    // Route::patch('profile/{profile}', 'App\Http\Controllers\Api\AuthController@updateUser');
-
-    // Route::get('orders', 'App\Http\Controllers\Api\OrderController@index');
-    // Route::get('admin/orders', 'App\Http\Controllers\Api\OrderController@index')->middleware('isAdmin');
-    // Route::post('orders', 'App\Http\Controllers\Api\OrderController@store');
-    // Route::get('orders/{order}', 'App\Http\Controllers\Api\OrderController@show');
-    // Route::get('/myorders/{order}', 'App\Http\Controllers\Api\OrderController@getUserOrders');
-    // Route::patch('orders/{order}/pay', 'App\Http\Controllers\Api\OrderController@updateOrderToPaid');
-    // Route::patch('orders/{order}/delivered', 'App\Http\Controllers\Api\OrderController@updateOrderToDelivered')->middleware('isAdmin');
-
-    // Route::apiResource('users', 'App\Http\Controllers\Api\AuthController');
-    // Route::apiResource('admin/roles', 'App\Http\Controllers\Api\RoleController');
 });

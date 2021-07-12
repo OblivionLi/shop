@@ -294,4 +294,22 @@ class ProductController extends Controller
 
         return response()->json($products);
     }
+
+    public function products($type, $parentCat) 
+    {
+        $products = Product::whereHas('types', function ($query) use ($type) {
+                        $query->where('type_id', $type);
+                    })->whereHas('parentCategories', function ($query) use ($parentCat) {
+                        $query->where('parent_category_id', $parentCat);
+                    })
+                    ->info()->withFilters(
+                            request()->input('prices', []),
+                            request()->input('brands', []),
+                            request()->input('sizes', []),
+                            request()->input('colors', []),
+                        )
+                    ->paginate(2);
+
+        return response()->json($products);
+    }
 }

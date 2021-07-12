@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Resources\BrandResource;
 use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -85,5 +86,29 @@ class BrandController extends Controller
         $brand->delete();
 
         return response()->json(['success' => 'Brand deleted successfully']);
+    }
+
+    public function brands($type, $parentCat, $childCat)
+    {
+        $brands = Brand::withCount(['products' => function ($query) use ($type, $parentCat, $childCat) {
+            $query->whereHas('types', function ($query) use ($type) {
+                $query->where('type_id', $type);
+            });
+            $query->whereHas('childCategories', function ($query) use ($childCat) {
+                $query->where('child_category_id', $childCat);
+            });
+            $query->whereHas('parentCategories', function ($query) use ($parentCat) {
+                $query->where('parent_category_id', $parentCat);
+            });
+            $query->withFilters(
+                request()->input('prices', []),
+                request()->input('brands', []),
+                request()->input('sizes', []),
+                request()->input('colors', []),
+            );
+        }])
+        ->get();
+
+        return response()->json($brands);
     }
 }

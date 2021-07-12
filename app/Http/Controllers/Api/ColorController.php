@@ -86,4 +86,28 @@ class ColorController extends Controller
 
         return response()->json(['success' => 'Color deleted successfully']);
     }
+
+    public function colors($type, $parentCat, $childCat) 
+    {
+        $colors = Color::withCount(['products' => function ($query) use ($type, $parentCat, $childCat) {
+            $query->whereHas('types', function ($query) use ($type) {
+                $query->where('type_id', $type);
+            });
+            $query->whereHas('parentCategories', function ($query) use ($parentCat) {
+                $query->where('parent_category_id', $parentCat);
+            });
+            $query->whereHas('childCategories', function ($query) use ($childCat) {
+                $query->where('child_category_id', $childCat);
+            });
+            $query->withFilters(
+                request()->input('prices', []),
+                request()->input('brands', []),
+                request()->input('sizes', []),
+                request()->input('colors', []),
+            );
+        }])
+        ->get();
+
+        return response()->json($colors);
+    }
 }

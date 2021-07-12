@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import {
-    adminListProducts,
     getEditProductRelDetails,
 } from "../actions/productActions";
-import { adminListTypes } from "../actions/typeActions";
-import Loader from "./Loader";
-import Message from "./Message";
-import Swal from "sweetalert2";
-import Moment from "react-moment";
 
 const Navbar2 = () => {
     const dispatch = useDispatch();
@@ -52,14 +46,14 @@ const Navbar2 = () => {
                                                 {pCats.child_cats.map(
                                                     (childCat) => (
                                                         <li key={childCat.id}>
-                                                            <a
-                                                                href="#"
+                                                            <Link
+                                                                to={`/products/type/${pCats.type_id}/parent-category/${pCats.id}/child-category/${childCat.id}`}
                                                                 className="menu__content-lists--linkM"
                                                             >
                                                                 {
                                                                     childCat.child_category_name
                                                                 }
-                                                            </a>
+                                                            </Link>
                                                         </li>
                                                     )
                                                 )}
@@ -95,14 +89,14 @@ const Navbar2 = () => {
                                                 {pCats.child_cats.map(
                                                     (childCat) => (
                                                         <li key={childCat.id}>
-                                                            <a
-                                                                href="#"
+                                                            <Link
+                                                                to={`/products/type/${pCats.type_id}/parent-category/${pCats.id}/child-category/${childCat.id}`}
                                                                 className="menu__content-lists--linkF"
                                                             >
                                                                 {
                                                                     childCat.child_category_name
                                                                 }
-                                                            </a>
+                                                            </Link>
                                                         </li>
                                                     )
                                                 )}
@@ -138,14 +132,14 @@ const Navbar2 = () => {
                                                 {pCats.child_cats.map(
                                                     (childCat) => (
                                                         <li key={childCat.id}>
-                                                            <a
-                                                                href="#"
+                                                            <Link
+                                                                to={`/products/type/${pCats.type_id}/parent-category/${pCats.id}/child-category/${childCat.id}`}
                                                                 className="menu__content-lists--linkK"
                                                             >
                                                                 {
                                                                     childCat.child_category_name
                                                                 }
-                                                            </a>
+                                                            </Link>
                                                         </li>
                                                     )
                                                 )}

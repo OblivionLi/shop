@@ -256,6 +256,25 @@
   color: #3a446b;
 }
 
+.aboutUs {
+  margin-bottom: 50px;
+}
+
+.aboutUs {
+  padding: 30px;
+}
+
+.tos {
+  padding: 30px;
+}
+
+.about-text {
+  text-indent: 4.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  letter-spacing: 0.05em;
+}
+
 .toolbar-nav {
   display: flex;
   justify-content: space-between;
@@ -456,6 +475,96 @@
 .rating-from {
   display: flex;
   gap: 15px;
+}
+
+.cart {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.placeorder {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.placeorder-userDetails {
+  margin-bottom: 30px;
+}
+
+.cartList {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.isPaid {
+  color: green;
+}
+
+.notPaid {
+  color: orange;
+}
+
+.delivered {
+  color: green;
+}
+
+.failed {
+  color: darkred;
+}
+
+.checkout-tabel {
+  width: 30rem;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkout-label {
+  width: 100%;
+}
+
+.profile {
+  width: 80%;
+  margin: 40px auto;
+}
+
+.settings {
+  padding: 40px;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+.product-list--sidebar {
+  width: 20%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.product-list--products {
+  padding: 20px;
+  width: 75%;
+}
+.product-list--products-filter {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.product-list--products-items {
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
 /*!

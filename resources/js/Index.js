@@ -19,6 +19,8 @@ import ProfileScreen from './screens/public/users/ProfileScreen';
 import SettingsScreen from './screens/public/users/SettingsScreen';
 import AboutScreen from './screens/AboutScreen';
 import ProductsListScreen from './screens/public/products/ProductsListScreen';
+import ProductsListByTypeScreen from './screens/public/products/ProductsListByTypeScreen';
+import ProductsListByParentCategoryScreen from './screens/public/products/ProductsListByParentCategoryScreen';
 
 function Index() {
     return (
@@ -36,10 +38,20 @@ function Index() {
                 {/* About */}
                 <Route path="/about" component={AboutScreen}/>
 
-                {/* Products */}
+                {/* Show product */}
                 <Route path="/product/:id" component={ShowProductScreen} />
-                <Route path="/products/type/:type/parent-category/:pCat/child-category/:cCat" component={ProductsListScreen} exact />
+
+
+                <Route path="/products/type/:type/parent-category/:pCat/child-category/:cCat" component={ProductsListScreen} />
                 <Route path="/products/type/:type/parent-category/:pCat/child-category/:cCat/:page?" component={ProductsListScreen} />
+
+                {/* Products List By Parent Category */}
+                <Route path="/products/type/:type/parent-category/:pCat" component={ProductsListByParentCategoryScreen} exact />
+                <Route path="/products/type/:type/parent-category/:pCat/:page?" component={ProductsListByParentCategoryScreen} />
+
+                {/* Products List By Type */}
+                <Route path="/products/type/:type" component={ProductsListByTypeScreen} exact />
+                <Route path="/products/type/:type/:page?" component={ProductsListByTypeScreen} />
 
                 {/* Reviews */}
                 <Route path="/reviews/product/:id" component={ReviewsScreen} exact />

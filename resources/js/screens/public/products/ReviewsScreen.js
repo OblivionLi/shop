@@ -1,38 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainNavbar from "../../../components/MainNavbar";
 import CategoriesNavbar from "../../../components/CategoriesNavbar";
 import Loader from "../../../components/Loader";
 import Message from "../../../components/Message";
-import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Rating from "@material-ui/lab/Rating";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Swal from "sweetalert2";
+import { makeStyles } from "@material-ui/core/styles";
 import {
     Divider,
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    InputLabel,
-    MenuItem,
-    Radio,
-    RadioGroup,
-    Select,
-    Button,
     Paper,
-    TextField,
-    Box,
-    Typography,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     Breadcrumbs,
 } from "@material-ui/core";
 import Footer from "../../../components/Footer";
 import { Link } from "react-router-dom";
 import { reviewsListPag } from "../../../actions/reviewActions";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import ReviewPaginate from "../../../components/ReviewPaginate";
 

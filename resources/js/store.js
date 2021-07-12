@@ -71,6 +71,8 @@ import {
     userDeleteReducer,
     userGetEditDetailsReducer,
     userEditReducer,
+    userDetailsReducer,
+    userUpdateProfileReducer,
 } from "./reducers/userReducers";
 
 import {
@@ -190,6 +192,8 @@ const reducer = combineReducers({
     userDelete: userDeleteReducer,
     userGetEditDetails: userGetEditDetailsReducer,
     userEdit: userEditReducer,
+    userDetails: userDetailsReducer,
+    userUpdateProfile: userUpdateProfileReducer,
 
     roleList: roleListReducer,
     roleGetEditDetails: roleGetEditDetailsReducer,

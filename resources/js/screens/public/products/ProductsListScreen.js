@@ -118,7 +118,7 @@ const ProductsListScreen = ({ history, match }) => {
         } else {
             axios
                 .get(
-                    `/api/products/type/${typeId}/parent-category/${parentCatId}?page=${page}`, // ?page=${page}
+                    `/api/products/type/${typeId}/parent-category/${parentCatId}?page=${page}`,
                     {
                         params: selected,
                     }
@@ -267,8 +267,6 @@ const ProductsListScreen = ({ history, match }) => {
         }
     };
 
-    console.log(sizes)
-
     return (
         <>
             <MainNavbar />
@@ -336,20 +334,6 @@ const ProductsListScreen = ({ history, match }) => {
                                                 }
                                                 label={`${price.name}`}
                                             />
-
-                                            {/* <input
-                                                type="checkbox"
-                                                value={price.id}
-                                                onChange={(e) =>
-                                                    handlePricesSelected(e)
-                                                }
-                                                id={`price${price.id}`}
-                                                
-                                            />
-                                            <label htmlFor={`price${price.id}`}>
-                                                {price.name} (
-                                                {price.products_count})
-                                            </label> */}
                                         </div>
                                     ))}
 
@@ -373,19 +357,6 @@ const ProductsListScreen = ({ history, match }) => {
                                                 label={`${brand.brand_name} (
                                                     ${brand.products_count})`}
                                             />
-
-                                            {/* <input
-                                                type="checkbox"
-                                                value={brand.id}
-                                                id={`brand${brand.id}`}
-                                                onChange={(e) =>
-                                                    handleBrandsSelected(e)
-                                                }
-                                            />
-                                            <label htmlFor={`brand${brand.id}`}>
-                                                {brand.brand_name} (
-                                                {brand.products_count})
-                                            </label> */}
                                         </div>
                                     ))}
 
@@ -409,18 +380,6 @@ const ProductsListScreen = ({ history, match }) => {
                                                 label={`${color.color_name} (
                                                     ${color.products_count})`}
                                             />
-                                            {/* <input
-                                                type="checkbox"
-                                                value={color.id}
-                                                id={`color${color.id}`}
-                                                onChange={(e) =>
-                                                    handleColorsSelected(e)
-                                                }
-                                            />
-                                            <label htmlFor={`color${color.id}`}>
-                                                {color.color_name} (
-                                                {color.products_count})
-                                            </label> */}
                                         </div>
                                     ))}
 
@@ -444,18 +403,6 @@ const ProductsListScreen = ({ history, match }) => {
                                                 label={`${size.size_name} (
                                                     ${size.products_count})`}
                                             />
-                                            {/* <input
-                                                type="checkbox"
-                                                value={size.id}
-                                                id={`size${size.id}`}
-                                                onChange={(e) =>
-                                                    handleSizesSelected(e)
-                                                }
-                                            />
-                                            <label htmlFor={`size${size.id}`}>
-                                                {size.size_name} (
-                                                {size.products_count})
-                                            </label> */}
                                         </div>
                                     ))}
                                 </>

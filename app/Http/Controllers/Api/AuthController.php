@@ -10,11 +10,13 @@ use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mail;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -157,5 +159,55 @@ class AuthController extends Controller
         $userReset = DB::select('select * from password_resets where token = :token', ['token' => $token]);
 
         return response()->json($userReset, 200);
+    }
+
+    public function getUser()
+    {
+        $user_id = Auth::id();
+
+        $user = User::info()->find($user_id);
+
+        return response()->json($user, 200);
+    }
+
+    public function updateUser(Request $request)
+    {
+        $user_id = Auth::id();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'string|max:255',
+            'email' => [
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($user_id)
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response(['message' => $validator->errors()->all()], 422);
+        }
+
+        $user = User::info()->find($user_id);
+
+        if ($user) {
+            $user->name = $request->name;
+            $user->email = $request->email;
+
+            if ($request->password) {
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->save();
+        } else {
+            $response = ['message' => 'User not found'];
+            return response()->json($response, 404);
+        }
+
+        return response()->json([
+            'message' => 'User update successfully',
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
     }
 }

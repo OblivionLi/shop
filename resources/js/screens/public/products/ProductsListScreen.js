@@ -106,7 +106,7 @@ const ProductsListScreen = ({ history, match }) => {
 
     let current_page = products && products.current_page;
     let last_page = products && products.last_page;
-    
+
     const childCatGetEditDetails = useSelector(
         (state) => state.childCatGetEditDetails
     );
@@ -132,22 +132,30 @@ const ProductsListScreen = ({ history, match }) => {
                 });
 
             axios
-                .get(`/api/brands/type/${typeId}/parent-category/${parentCatId}/child-category/${childCatId}`, {
-                    params: _.omit(selected, "brands"),
-                })
+                .get(
+                    `/api/brands/type/${typeId}/parent-category/${parentCatId}/child-category/${childCatId}`,
+                    {
+                        params: _.omit(selected, "brands"),
+                    }
+                )
                 .then((response) => {
                     setBrands(response.data);
+                    setLoad(false);
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
 
             axios
-                .get(`/api/colors/type/${typeId}/parent-category/${parentCatId}/child-category/${childCatId}`, {
-                    params: _.omit(selected, "colors"),
-                })
+                .get(
+                    `/api/colors/type/${typeId}/parent-category/${parentCatId}/child-category/${childCatId}`,
+                    {
+                        params: _.omit(selected, "colors"),
+                    }
+                )
                 .then((response) => {
                     setColors(response.data);
+                    setLoad(false);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -159,17 +167,22 @@ const ProductsListScreen = ({ history, match }) => {
                 })
                 .then((response) => {
                     setPrices(response.data);
+                    setLoad(false);
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
 
             axios
-                .get(`/api/sizes/type/${typeId}/parent-category/${parentCatId}/child-category/${childCatId}`, {
-                    params: _.omit(selected, "sizes"),
-                })
+                .get(
+                    `/api/sizes/type/${typeId}/parent-category/${parentCatId}/child-category/${childCatId}`,
+                    {
+                        params: _.omit(selected, "sizes"),
+                    }
+                )
                 .then((response) => {
                     setSizes(response.data);
+                    setLoad(false);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -198,6 +211,7 @@ const ProductsListScreen = ({ history, match }) => {
                 };
             });
         }
+        setLoad(true);
     };
 
     const handleBrandsSelected = (e) => {
@@ -221,6 +235,7 @@ const ProductsListScreen = ({ history, match }) => {
                 };
             });
         }
+        setLoad(true);
     };
 
     const handleColorsSelected = (e) => {
@@ -244,6 +259,7 @@ const ProductsListScreen = ({ history, match }) => {
                 };
             });
         }
+        setLoad(true);
     };
 
     const handleSizesSelected = (e) => {
@@ -265,6 +281,7 @@ const ProductsListScreen = ({ history, match }) => {
                 };
             });
         }
+        setLoad(true);
     };
 
     return (
@@ -306,199 +323,191 @@ const ProductsListScreen = ({ history, match }) => {
                     </Breadcrumbs>
                     <Divider className={classes.bread} />
 
-                    {load ? (
-                        <Loader />
-                    ) : (
-                        <div className="product-list">
-                            <Paper className="product-list--sidebar">
-                                <>
-                                    <h2>Filter</h2>
-                                    <Divider />
-
-                                    <h4>Price</h4>
-                                    <Divider />
-
-                                    {prices.map((price, index) => (
-                                        <div key={price.name}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        value={index}
-                                                        onChange={(e) =>
-                                                            handlePricesSelected(
-                                                                e
-                                                            )
-                                                        }
-                                                        name="price"
-                                                    />
-                                                }
-                                                label={`${price.name}`}
-                                            />
-                                        </div>
-                                    ))}
-
-                                    <h4>Brand</h4>
-                                    <Divider />
-
-                                    {brands.map((brand) => (
-                                        <div key={brand.id}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        value={brand.id}
-                                                        onChange={(e) =>
-                                                            handleBrandsSelected(
-                                                                e
-                                                            )
-                                                        }
-                                                        name="brand"
-                                                    />
-                                                }
-                                                label={`${brand.brand_name} (
-                                                    ${brand.products_count})`}
-                                            />
-                                        </div>
-                                    ))}
-
-                                    <h4>Color</h4>
-                                    <Divider />
-
-                                    {colors.map((color) => (
-                                        <div key={color.id}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        value={color.id}
-                                                        onChange={(e) =>
-                                                            handleColorsSelected(
-                                                                e
-                                                            )
-                                                        }
-                                                        name="color"
-                                                    />
-                                                }
-                                                label={`${color.color_name} (
-                                                    ${color.products_count})`}
-                                            />
-                                        </div>
-                                    ))}
-
-                                    <h4>Size</h4>
-                                    <Divider />
-
-                                    {sizes.map((size) => (
-                                        <div key={size.id}>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        value={size.id}
-                                                        onChange={(e) =>
-                                                            handleSizesSelected(
-                                                                e
-                                                            )
-                                                        }
-                                                        name="size"
-                                                    />
-                                                }
-                                                label={`${size.size_name} (
-                                                    ${size.products_count})`}
-                                            />
-                                        </div>
-                                    ))}
-                                </>
-                            </Paper>
-
-                            <Paper className="product-list--products">
-                                <div className="product-list--products-filter">
-                                    <p>Filter By</p>
-                                    <h3>
-                                        {products.data.length} products found
-                                    </h3>
-                                </div>
-
+                    <div className="product-list">
+                        <Paper className="product-list--sidebar">
+                            <>
+                                <h2>Filter</h2>
                                 <Divider />
 
-                                <div className="product-list--products-items">
-                                    {products.data.map((product) => (
-                                        <Card
-                                            className={classes.root}
-                                            key={product.id}
-                                        >
-                                            <CardActionArea>
-                                                <CardMedia
-                                                    component="img"
-                                                    alt="Product 1"
-                                                    height="300"
-                                                    image={`http://127.0.0.1:8000/storage/${product.images[0].path}`}
-                                                    title={product.name}
-                                                />
-                                                <CardContent>
-                                                    <Typography
-                                                        gutterBottom
-                                                        variant="h5"
-                                                        component="h2"
-                                                        className={
-                                                            classes.title
-                                                        }
-                                                    >
-                                                        {product.name}
-                                                    </Typography>
-                                                </CardContent>
-                                            </CardActionArea>
-                                            <CardActions
-                                                className={classes.actions}
-                                            >
-                                                <Button
-                                                    size="small"
-                                                    color="inherit"
-                                                >
-                                                    <Link
-                                                        to={`/product/${product.id}`}
-                                                        className="admin--links"
-                                                        target="_blank"
-                                                    >
-                                                        View
-                                                    </Link>
-                                                </Button>
-                                                <span color="inherit">
-                                                    &euro;
-                                                    {(
-                                                        product.price -
-                                                        (product.price *
-                                                            product.discount) /
-                                                            100
-                                                    ).toFixed(2)}
-                                                </span>
-                                                {" - "}
-                                                <strike>
-                                                    &euro;
-                                                    {product.price}
-                                                </strike>
-                                                <Box
-                                                    component="fieldset"
-                                                    borderColor="transparent"
-                                                    className={classes.box}
-                                                >
-                                                    <Rating
-                                                        size="small"
-                                                        readOnly
-                                                        value={parseFloat(
-                                                            product.rating
-                                                        )}
-                                                        text={`${product.total_reviews} reviews`}
-                                                        precision={0.5}
-                                                        className={
-                                                            classes.rating
-                                                        }
-                                                    />
-                                                </Box>
-                                            </CardActions>
-                                        </Card>
-                                    ))}
-                                </div>
+                                <h4>Price</h4>
+                                <Divider />
 
-                                {products.data.length > 0 &&
-                                    !load && (
+                                {prices.map((price, index) => (
+                                    <div key={price.name}>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    value={index}
+                                                    onChange={(e) =>
+                                                        handlePricesSelected(e)
+                                                    }
+                                                    name="price"
+                                                />
+                                            }
+                                            label={`${price.name}`}
+                                        />
+                                    </div>
+                                ))}
+
+                                <h4>Brand</h4>
+                                <Divider />
+
+                                {brands.map((brand) => (
+                                    <div key={brand.id}>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    value={brand.id}
+                                                    onChange={(e) =>
+                                                        handleBrandsSelected(e)
+                                                    }
+                                                    name="brand"
+                                                />
+                                            }
+                                            label={`${brand.brand_name} (
+                                                    ${brand.products_count})`}
+                                        />
+                                    </div>
+                                ))}
+
+                                <h4>Color</h4>
+                                <Divider />
+
+                                {colors.map((color) => (
+                                    <div key={color.id}>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    value={color.id}
+                                                    onChange={(e) =>
+                                                        handleColorsSelected(e)
+                                                    }
+                                                    name="color"
+                                                />
+                                            }
+                                            label={`${color.color_name} (
+                                                    ${color.products_count})`}
+                                        />
+                                    </div>
+                                ))}
+
+                                <h4>Size</h4>
+                                <Divider />
+
+                                {sizes.map((size) => (
+                                    <div key={size.id}>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    value={size.id}
+                                                    onChange={(e) =>
+                                                        handleSizesSelected(e)
+                                                    }
+                                                    name="size"
+                                                />
+                                            }
+                                            label={`${size.size_name} (
+                                                    ${size.products_count})`}
+                                        />
+                                    </div>
+                                ))}
+                            </>
+                        </Paper>
+                        <Paper className="product-list--products">
+                            {load ? (
+                                <Loader />
+                            ) : (
+                                <>
+                                    <div className="product-list--products-filter">
+                                        <p>Products List</p>
+                                        <h3>
+                                            {products.data.length} products
+                                            found
+                                        </h3>
+                                    </div>
+
+                                    <Divider />
+
+                                    <div className="product-list--products-items">
+                                        {products.data.map((product) => (
+                                            <Card
+                                                className={classes.root}
+                                                key={product.id}
+                                            >
+                                                <CardActionArea>
+                                                    <CardMedia
+                                                        component="img"
+                                                        alt="Product 1"
+                                                        height="300"
+                                                        image={`http://127.0.0.1:8000/storage/${product.images[0].path}`}
+                                                        title={product.name}
+                                                    />
+                                                    <CardContent>
+                                                        <Typography
+                                                            gutterBottom
+                                                            variant="h5"
+                                                            component="h2"
+                                                            className={
+                                                                classes.title
+                                                            }
+                                                        >
+                                                            {product.name}
+                                                        </Typography>
+                                                    </CardContent>
+                                                </CardActionArea>
+                                                <CardActions
+                                                    className={classes.actions}
+                                                >
+                                                    <Button
+                                                        size="small"
+                                                        color="inherit"
+                                                    >
+                                                        <Link
+                                                            to={`/product/${product.id}`}
+                                                            className="admin--links"
+                                                            target="_blank"
+                                                        >
+                                                            View
+                                                        </Link>
+                                                    </Button>
+                                                    <span color="inherit">
+                                                        &euro;
+                                                        {(
+                                                            product.price -
+                                                            (product.price *
+                                                                product.discount) /
+                                                                100
+                                                        ).toFixed(2)}
+                                                    </span>
+                                                    {" - "}
+                                                    <strike>
+                                                        &euro;
+                                                        {product.price}
+                                                    </strike>
+                                                    <Box
+                                                        component="fieldset"
+                                                        borderColor="transparent"
+                                                        className={classes.box}
+                                                    >
+                                                        <Rating
+                                                            size="small"
+                                                            readOnly
+                                                            value={parseFloat(
+                                                                product.rating
+                                                            )}
+                                                            text={`${product.total_reviews} reviews`}
+                                                            precision={0.5}
+                                                            className={
+                                                                classes.rating
+                                                            }
+                                                        />
+                                                    </Box>
+                                                </CardActions>
+                                            </Card>
+                                        ))}
+                                    </div>
+
+                                    {products.data.length > 0 && !load && (
                                         <div className="pagination">
                                             <ProductPaginate
                                                 type={typeId}
@@ -509,9 +518,10 @@ const ProductsListScreen = ({ history, match }) => {
                                             />
                                         </div>
                                     )}
-                            </Paper>
-                        </div>
-                    )}
+                                </>
+                            )}
+                        </Paper>
+                    </div>
                 </section>
             )}
             <Footer />

@@ -15,6 +15,10 @@ import CartScreen from './screens/public/shop/CartScreen';
 import PlaceOrderScreen from './screens/public/shop/PlaceOrderScreen';
 import ShippingScreen from './screens/public/shop/ShippingScreen';
 import ShowOrderScreen from './screens/public/shop/ShowOrderScreen';
+import ProfileScreen from './screens/public/users/ProfileScreen';
+import SettingsScreen from './screens/public/users/SettingsScreen';
+import AboutScreen from './screens/AboutScreen';
+import ProductsListScreen from './screens/public/products/ProductsListScreen';
 
 function Index() {
     return (
@@ -26,9 +30,16 @@ function Index() {
                 <Route path="/register" component={RegisterScreen} />
                 <Route path="/reset-password/:id" component={ResetPasswordScreen} />
                 <Route path="/forgot-password" component={ForgotPasswordScreen} />
+                <Route path="/profile" component={ProfileScreen} exact />
+                <Route path="/profile/settings" component={SettingsScreen}/>
+
+                {/* About */}
+                <Route path="/about" component={AboutScreen}/>
 
                 {/* Products */}
                 <Route path="/product/:id" component={ShowProductScreen} />
+                <Route path="/products/type/:type/parent-category/:pCat/child-category/:cCat" component={ProductsListScreen} exact />
+                <Route path="/products/type/:type/parent-category/:pCat/child-category/:cCat/:page?" component={ProductsListScreen} />
 
                 {/* Reviews */}
                 <Route path="/reviews/product/:id" component={ReviewsScreen} exact />

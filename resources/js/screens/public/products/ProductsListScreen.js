@@ -181,8 +181,6 @@ const ProductsListScreen = ({ history, match }) => {
         let value = e.target.value;
         let checked = e.target.checked;
 
-        console.log(value)
-
         if (checked) {
             setSelected((prevState) => {
                 return {

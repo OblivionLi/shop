@@ -155,19 +155,19 @@ const Navbar = () => {
                 >
                     <AccountCircle />
                 </IconButton>
-                <a href="#">Profile</a>
+                <Link to="/profile">Profile</Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
                 <IconButton className={classes.icons}>
                     <SettingsIcon />
                 </IconButton>
-                <a href="#">Settings</a>
+                <Link to="/profile/settings">Settings</Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
                 <IconButton className={classes.icons}>
                     <ExitToAppIcon />
                 </IconButton>
-                <a href="/" onClick={logoutHandler}>
+                <a href="#" onClick={logoutHandler}>
                     Logout
                 </a>
             </MenuItem>
@@ -187,9 +187,9 @@ const Navbar = () => {
         >
             <MenuItem>
                 <IconButton color="inherit" className={classes.icons}>
-                    <MailIcon />
+                    <HelpIcon />
                 </IconButton>
-                <a href="#">Contact</a>
+                <Link to="/about">About</Link>
             </MenuItem>
             <MenuItem>
                 <IconButton color="inherit" className={classes.icons}>
@@ -212,7 +212,7 @@ const Navbar = () => {
                 >
                     <AccountCircle />
                 </IconButton>
-                <a href="#">Profile</a>
+                <Link to="/profile">Profile</Link>
             </MenuItem>
         </Menu>
     );
@@ -244,9 +244,14 @@ const Navbar = () => {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton color="inherit" className={classes.icons}>
-                            <HelpIcon />
-                        </IconButton>
+                        <Link to="/about">
+                            <IconButton
+                                color="inherit"
+                                className={classes.icons}
+                            >
+                                <HelpIcon />
+                            </IconButton>
+                        </Link>
                         <Link to="/cart">
                             <IconButton
                                 color="inherit"

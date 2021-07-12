@@ -308,7 +308,7 @@ class ProductController extends Controller
                             request()->input('sizes', []),
                             request()->input('colors', []),
                         )
-                    ->paginate(2);
+                    ->paginate(6);
 
         return response()->json($products);
     }

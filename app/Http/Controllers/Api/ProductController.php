@@ -295,12 +295,48 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function products($type, $parentCat) 
+    public function products($type, $parentCat, $childCat) 
     {
         $products = Product::whereHas('types', function ($query) use ($type) {
                         $query->where('type_id', $type);
                     })->whereHas('parentCategories', function ($query) use ($parentCat) {
                         $query->where('parent_category_id', $parentCat);
+                    })->whereHas('childCategories', function ($query) use ($childCat) {
+                        $query->where('child_category_id', $childCat);
+                    })
+                    ->info()->withFilters(
+                            request()->input('prices', []),
+                            request()->input('brands', []),
+                            request()->input('sizes', []),
+                            request()->input('colors', []),
+                        )
+                    ->paginate(6);
+
+        return response()->json($products);
+    }
+
+    public function productsByType($type) 
+    {
+        $products = Product::whereHas('types', function ($query) use ($type) {
+                        $query->where('name', $type);
+                    })
+                    ->info()->withFilters(
+                            request()->input('prices', []),
+                            request()->input('brands', []),
+                            request()->input('sizes', []),
+                            request()->input('colors', []),
+                        )
+                    ->paginate(6);
+
+        return response()->json($products);
+    }
+
+    public function productsByParentCategory($type, $parentCat) 
+    {
+        $products = Product::whereHas('types', function ($query) use ($type) {
+                        $query->where('name', $type);
+                    })->whereHas('parentCategories', function ($query) use ($parentCat) {
+                        $query->where('parent_category_name', $parentCat);
                     })
                     ->info()->withFilters(
                             request()->input('prices', []),

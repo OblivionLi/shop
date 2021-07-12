@@ -111,4 +111,43 @@ class BrandController extends Controller
 
         return response()->json($brands);
     }
+
+    public function brandsByType($type)
+    {
+        $brands = Brand::withCount(['products' => function ($query) use ($type) {
+            $query->whereHas('types', function ($query) use ($type) {
+                $query->where('name', $type);
+            });
+            $query->withFilters(
+                request()->input('prices', []),
+                request()->input('brands', []),
+                request()->input('sizes', []),
+                request()->input('colors', []),
+            );
+        }])
+        ->get();
+
+        return response()->json($brands);
+    }
+
+    public function brandsByParentCategory($type, $parentCat)
+    {
+        $brands = Brand::withCount(['products' => function ($query) use ($type, $parentCat) {
+            $query->whereHas('types', function ($query) use ($type) {
+                $query->where('name', $type);
+            });
+            $query->whereHas('parentCategories', function ($query) use ($parentCat) {
+                $query->where('parent_category_name', $parentCat);
+            });
+            $query->withFilters(
+                request()->input('prices', []),
+                request()->input('brands', []),
+                request()->input('sizes', []),
+                request()->input('colors', []),
+            );
+        }])
+        ->get();
+
+        return response()->json($brands);
+    }
 }

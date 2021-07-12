@@ -110,4 +110,43 @@ class SizeController extends Controller
 
         return response()->json($sizes);
     }
+
+    public function sizesByType($type) 
+    {
+        $sizes = Size::withCount(['products' => function ($query) use ($type) {
+            $query->whereHas('types', function ($query) use ($type) {
+                $query->where('name', $type);
+            });
+            $query->withFilters(
+                request()->input('prices', []),
+                request()->input('brands', []),
+                request()->input('sizes', []),
+                request()->input('colors', []),
+            );
+        }])
+        ->get();
+
+        return response()->json($sizes);
+    }
+
+    public function sizesByParentCategory($type, $parentCat) 
+    {
+        $sizes = Size::withCount(['products' => function ($query) use ($type, $parentCat) {
+            $query->whereHas('types', function ($query) use ($type) {
+                $query->where('name', $type);
+            });
+            $query->whereHas('parentCategories', function ($query) use ($parentCat) {
+                $query->where('parent_category_name', $parentCat);
+            });
+            $query->withFilters(
+                request()->input('prices', []),
+                request()->input('brands', []),
+                request()->input('sizes', []),
+                request()->input('colors', []),
+            );
+        }])
+        ->get();
+
+        return response()->json($sizes);
+    }
 }

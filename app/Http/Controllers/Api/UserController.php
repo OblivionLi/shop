@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -92,5 +93,29 @@ class UserController extends Controller
 
         $response = ['message' => 'User deleted successfully'];
         return response()->json($response, 200);
+    }
+
+    public function countUsersByMonth()
+    {
+        $users = User::select('id', 'created_at')->get()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('m');
+        });
+
+        $userCount = [];
+        $userArr = [];
+
+        foreach ($users as $key => $value) {
+            $userCount[(int)$key] = count($value);
+        }
+
+        for ($i = 1; $i <= 12; $i++) {
+            if (!empty($userCount[$i])) {
+                $userArr[] = $userCount[$i];
+            } else {
+                $userArr[] = 0;
+            }
+        }
+
+        return response()->json($userArr);
     }
 }

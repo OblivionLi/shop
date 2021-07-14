@@ -47,6 +47,7 @@ const ProfileScreen = ({ history }) => {
     const classes = useStyles();
 
     const [loading, setLoading] = useState(true);
+    const [orders, setOrders] = useState();
 
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
@@ -57,7 +58,23 @@ const ProfileScreen = ({ history }) => {
         } else {
             setLoading(false);
         }
-    }, [userInfo]);
+
+        if (!orders) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${userInfo.access_token}`,
+                },
+            };
+
+            async function fetchData() {
+                const response = await axios.get("/api/userOrders", config);
+
+                setOrders(response.data);
+            }
+            fetchData();
+        }
+
+    }, [userInfo, orders]);
 
     return (
         <>
@@ -93,7 +110,10 @@ const ProfileScreen = ({ history }) => {
                                 field: "id",
                                 render: (order) => {
                                     return (
-                                        <a href={`/order/${order.id}`} target="_blank">
+                                        <a
+                                            href={`/order/${order.id}`}
+                                            target="_blank"
+                                        >
                                             Order Details
                                         </a>
                                     );
@@ -199,7 +219,7 @@ const ProfileScreen = ({ history }) => {
                                 },
                             },
                         ]}
-                        data={userInfo && userInfo.orders}
+                        data={orders && orders}
                         options={{
                             actionsColumnIndex: -1,
                         }}

@@ -21,7 +21,7 @@ import Message from "../../../components/Message";
 import Error404 from "../../../components/Error404";
 import MaterialTable from "material-table";
 import CheckoutFormScreen from "./CheckoutFormScreen";
-
+import { getEditUserDetails } from "../../../actions/userActions";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
@@ -110,6 +110,9 @@ const ShowOrderScreen = ({ match, history }) => {
     const orderPay = useSelector((state) => state.orderPay);
     const { loading: loadingPay, success: successPay } = orderPay;
 
+    const userGetEditDetails = useSelector((state) => state.userGetEditDetails);
+    const { user } = userGetEditDetails;
+
     // Cart
     const addDecimals = (num) => {
         return (Math.round(num * 100) / 100).toFixed(2);
@@ -141,6 +144,8 @@ const ShowOrderScreen = ({ match, history }) => {
     useEffect(() => {
         if (!userInfo) {
             history.push("/login");
+        } else {
+            dispatch(getEditUserDetails(userInfo.id));
         }
 
         if (!order || successDeliver || order.id != orderId || successPay) {
@@ -200,24 +205,24 @@ const ShowOrderScreen = ({ match, history }) => {
                         <div className="placeorder">
                             <div className="placeorder-userDetails">
                                 <p>
-                                    Sending to: {userInfo.address[0].name}{" "}
-                                    {userInfo.address[0].surname}
+                                    Sending to: {user.addresses[0].name}{" "}
+                                    {user.addresses[0].surname}
                                 </p>
 
                                 <Divider />
 
                                 <p>
-                                    Your Address: {userInfo.address[0].country},{" "}
-                                    {userInfo.address[0].city},{" "}
-                                    {userInfo.address[0].address},{" "}
-                                    {userInfo.address[0].postal_code}
+                                    Your Address: {user.addresses[0].country},{" "}
+                                    {user.addresses[0].city},{" "}
+                                    {user.addresses[0].address},{" "}
+                                    {user.addresses[0].postal_code}
                                 </p>
 
                                 <Divider />
 
                                 <p>
                                     Your Phone Number:{" "}
-                                    {userInfo.address[0].phone_number}
+                                    {user.addresses[0].phone_number}
                                 </p>
 
                                 <Divider />

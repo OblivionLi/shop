@@ -128,7 +128,7 @@ const Navbar = () => {
                 <IconButton className={classes.icons}>
                     <ExitToAppIcon />
                 </IconButton>
-                <a href="#" onClick={logoutHandler}>
+                <a href="/" onClick={logoutHandler}>
                     Logout
                 </a>
             </MenuItem>

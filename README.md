@@ -2,10 +2,12 @@
 
 ## About Project
 
-The project represents an online clothing store with dynamics types (men/women/kids/offers), dynamics parent categories for individual types (topwear/bottomwear etc..), dynamics child categories for individual parent categories in relation with types (t-shirt/pants etc..). 
+The project represents an online clothing store with dynamic types (men/women/kids/offers), dynamic parent categories for individual types (topwear/bottomwear etc..), dynamic child categories for individual parent categories in relation with types (t-shirt/pants etc..). 
 
-Has its own CMS system built from scratch that an admin can handle anything on the front-end and has a simple analytics charts (for users and orders paid). 
-Also contains a complete user authentication with authorization (user can register/login/forgot-pass | user can have custom roles with custom permissions that allows them to view all content from the admin space or limited access) (USER -> ROLES -> PERMISSIONS).
+Has its own CMS system built from scratch that an admin can handle anything on the front-end and has a simple analytic charts (for users and orders paid).
+
+Also contains a complete user authentication with authorization (user can register/login/logout/forgot-pass | user can have custom roles with custom permissions that allows them to view all content from the admin space or limited access) (USER -> ROLES -> PERMISSIONS).
+
 A chart system built from scratch that handles prices/discounts/taxes automatically and decreases the quantities from colors/sizes/products too when the order is placed.
 
 Stripe is used as a payment integration gateway for handling orders payment.

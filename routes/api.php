@@ -71,6 +71,8 @@ Route::get('config/stripe', [CheckoutController::class, 'index']);
 Route::post('payment_intents', [CheckoutController::class, 'createPayIntent']);
 
 Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('userOrders', [OrderController::class, 'getAllUserOrders']);
+
     Route::get('logout', [AuthController::class, 'logout']);
     Route::post('product/{product}/review', [ReviewController::class, 'save']);
 
@@ -91,6 +93,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('childCat/{childCat}', [ChildCategoryController::class, 'show']);
     
     Route::group(['middleware' => 'isAdmin'], function () {
+        Route::get('usersCount', [UserController::class, 'countUsersByMonth']);
+        Route::get('ordersCount', [OrderController::class, 'countOrdersByMonth']);
+
         Route::get('admin/order', [OrderController::class, 'adminIndex']);
         Route::patch('order/{order}/delivered', [OrderController::class, 'updateOrderToDelivered']);
 

@@ -50,6 +50,7 @@ import TypesScreen from "../screens/admin/types/TypesScreen";
 import ReviewsScreen from "./admin/reviews/ReviewsScreen";
 import AddressesScreen from "./admin/addresses/AddressesScreen";
 import OrdersScreen from "./admin/orders/OrdersScreen";
+import DashboardScreen from "./admin/DashboardScreen";
 
 const drawerWidth = 280;
 
@@ -518,12 +519,17 @@ const AdminScreen = ({ history }) => {
                         </Drawer>
                         <main className={classes.content}>
                             <div className={classes.toolbar} />
-
                             <Switch>
                                 {/* Public View */}
                                 <Route
                                     path="/admin/products"
                                     component={ProductsScreen}
+                                    exact
+                                />
+
+                                <Route
+                                    path="/admin"
+                                    component={DashboardScreen}
                                     exact
                                 />
 

@@ -245,9 +245,9 @@ const PlaceOrderScreen = ({ match, history }) => {
                                 <Message variant="info">
                                     Make sure your name, address and phone
                                     number is correct. If it's not then click{" "}
-                                    <Link to={`/shipping/${userInfo.id}`}>
+                                    <a href={`/shipping/${userInfo.id}`}>
                                         HERE
-                                    </Link>{" "}
+                                    </a>{" "}
                                     and fix them.
                                 </Message>
 
@@ -460,6 +460,7 @@ const PlaceOrderScreen = ({ match, history }) => {
                                                 color="primary"
                                                 value="submit"
                                                 type="submit"
+                                                disabled={cart.cartItems.length < 1 ? true : false}
                                             >
                                                 Place Order
                                             </Button>

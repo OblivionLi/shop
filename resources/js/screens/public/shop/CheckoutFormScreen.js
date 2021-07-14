@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { payOrder } from "../../../actions/orderActions";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { getEditUserDetails } from "../../../actions/userActions";
 
 const useStyles = makeStyles({
     root: {
@@ -44,20 +45,27 @@ const CheckoutFormScreen = ({ history, orderId, totalPrice }) => {
     const orderPay = useSelector((state) => state.orderPay);
     const { loading: loadingPay, success: successPay } = orderPay;
 
+    const userGetEditDetails = useSelector((state) => state.userGetEditDetails);
+    const { user } = userGetEditDetails;
+
     useEffect(() => {
         if (userInfo) {
-            setCountryInitials(
-                userInfo.address[0].country.toUpperCase().substr(0, 2)
-            );
-            setCity(userInfo.address[0].city);
-            setAddress(userInfo.address[0].address);
-            setEmail(userInfo.email);
-            setName(
-                `${userInfo.address[0].name} ${userInfo.address[0].surname}`
-            );
-            setPhone(userInfo.address[0].phone_number);
+            dispatch(getEditUserDetails(userInfo.id));
+
+            if (user) {
+                setCountryInitials(
+                    user.addresses[0].country.toUpperCase().substr(0, 2)
+                );
+                setCity(user.addresses[0].city);
+                setAddress(user.addresses[0].address);
+                setEmail(userInfo.email);
+                setName(
+                    `${user.addresses[0].name} ${user.addresses[0].surname}`
+                );
+                setPhone(user.addresses[0].phone_number);
+            }
         }
-    }, [userInfo]);
+    }, [userInfo, isProcessing]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -92,7 +100,8 @@ const CheckoutFormScreen = ({ history, orderId, totalPrice }) => {
 
         // confirm the card payments
         if (!backendError) {
-            const { error: stripeError, confirmedCardPayment } =
+            // const test =
+            const { error: stripeError, paymentIntent } =
                 await stripe.confirmCardPayment(intent, {
                     payment_method: paymentMethod.id,
                 });
@@ -104,18 +113,18 @@ const CheckoutFormScreen = ({ history, orderId, totalPrice }) => {
                     text: `${stripeError.message}`,
                 });
                 setProcessingTo(false);
+                history.push(`/order/${orderId}`)
             }
 
             if (
-                confirmedCardPayment &&
-                confirmedCardPayment.paymentIntent.status === "succeeded"
+                paymentIntent &&
+                paymentIntent.status === "succeeded"
             ) {
                 dispatch(payOrder(orderId));
             }
 
             if (successPay) {
                 setProcessingTo(true);
-
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -124,6 +133,7 @@ const CheckoutFormScreen = ({ history, orderId, totalPrice }) => {
                     timer: 2500,
                     width: "65rem",
                 });
+                history.push(`/order/${orderId}`)
             }
         } else {
             Swal.fire({
@@ -131,6 +141,8 @@ const CheckoutFormScreen = ({ history, orderId, totalPrice }) => {
                 title: "Oops...",
                 text: `Something went wrong! Backend Error: ${backendError.message}`,
             });
+            setProcessingTo(false);
+            history.push(`/order/${orderId}`)
         }
     };
 

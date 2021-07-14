@@ -152,4 +152,36 @@ class OrderController extends Controller
 
         return response()->json($orders);
     }
+
+    public function countOrdersByMonth()
+    {
+        $orders = Order::select('id', 'created_at')->where('is_paid', 1)->get()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('m');
+        });
+
+        $orderCount = [];
+        $orderArr = [];
+
+        foreach ($orders as $key => $value) {
+            $orderCount[(int)$key] = count($value);
+        }
+
+        for ($i = 1; $i <= 12; $i++) {
+            if (!empty($orderCount[$i])) {
+                $orderArr[] = $orderCount[$i];
+            } else {
+                $orderArr[] = 0;
+            }
+        }
+
+        return response()->json($orderArr);
+    }
+
+    public function getAllUserOrders()
+    {
+        $user_id = Auth::id();
+        $orders = Order::info()->where('user_id', $user_id)->get();
+
+        return response()->json($orders);
+    }
 }
